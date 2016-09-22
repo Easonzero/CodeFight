@@ -12,15 +12,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by eason on 16-9-20.
  */
 var core_1 = require('@angular/core');
-var index_1 = require("./define/index");
-var PIXI = require('pixi.js');
+var index_1 = require("./element/stage/index");
 var GameService = (function () {
     function GameService() {
-        this.currentStage = index_1.Stage.PREPARE;
-        this.stages = [];
-        for (var i = index_1.Stage.PREPARE; i < index_1.Stage.END; i++) {
-            this.stages[i] = new PIXI.Container();
-        }
+        this.container = new index_1.StageContainer();
         this.renderer = PIXI.autoDetectRenderer(900, 500);
     }
     GameService.prototype.getDomView = function () {
@@ -29,7 +24,7 @@ var GameService = (function () {
     GameService.prototype.gameLoop = function () {
         var _this = this;
         requestAnimationFrame(function () { return _this.gameLoop(); });
-        this.renderer.render(this.stages[this.currentStage]);
+        this.renderer.render(this.container.getCurrentModel());
     };
     GameService = __decorate([
         core_1.Injectable(), 
