@@ -8,7 +8,7 @@ export abstract class Stage {
 
     abstract onCreate();
 
-    abstract onSwitch();
+    abstract onSwitch(fn:()=>void);
 
     abstract afterSwitch();
 

@@ -15,7 +15,8 @@ var EndStage = (function (_super) {
     }
     EndStage.prototype.onCreate = function () {
     };
-    EndStage.prototype.onSwitch = function () {
+    EndStage.prototype.onSwitch = function (fn) {
+        fn();
     };
     EndStage.prototype.afterSwitch = function () {
     };

@@ -7,7 +7,8 @@ export class PrepareStage extends Stage{
     onCreate() {
     }
 
-    onSwitch() {
+    onSwitch(fn:()=>void) {
+        fn();
     }
 
     afterSwitch() {

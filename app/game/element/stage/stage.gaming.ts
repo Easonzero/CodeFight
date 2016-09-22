@@ -7,7 +7,8 @@ export class GamingStage extends Stage{
     onCreate() {
     }
 
-    onSwitch() {
+    onSwitch(fn:()=>void) {
+        fn();
     }
 
     afterSwitch() {

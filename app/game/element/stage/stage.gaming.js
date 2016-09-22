@@ -15,7 +15,8 @@ var GamingStage = (function (_super) {
     }
     GamingStage.prototype.onCreate = function () {
     };
-    GamingStage.prototype.onSwitch = function () {
+    GamingStage.prototype.onSwitch = function (fn) {
+        fn();
     };
     GamingStage.prototype.afterSwitch = function () {
     };

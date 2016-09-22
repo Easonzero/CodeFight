@@ -15,7 +15,8 @@ var PauseStage = (function (_super) {
     }
     PauseStage.prototype.onCreate = function () {
     };
-    PauseStage.prototype.onSwitch = function () {
+    PauseStage.prototype.onSwitch = function (fn) {
+        fn();
     };
     PauseStage.prototype.afterSwitch = function () {
     };

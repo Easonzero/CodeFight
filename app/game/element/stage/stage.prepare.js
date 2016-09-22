@@ -15,7 +15,8 @@ var PrepareStage = (function (_super) {
     }
     PrepareStage.prototype.onCreate = function () {
     };
-    PrepareStage.prototype.onSwitch = function () {
+    PrepareStage.prototype.onSwitch = function (fn) {
+        fn();
     };
     PrepareStage.prototype.afterSwitch = function () {
     };

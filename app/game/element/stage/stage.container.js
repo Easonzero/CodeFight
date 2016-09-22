@@ -22,10 +22,13 @@ var StageContainer = (function () {
         }
     };
     StageContainer.prototype.switch = function (state) {
+        var _this = this;
         var current = stage_interface_1.Stage[this.state];
         var next = stage_interface_1.Stage[state];
-        current.onSwitch();
-        next.afterSwitch();
+        current.onSwitch(function () {
+            _this.state = state;
+            next.afterSwitch();
+        });
     };
     StageContainer.prototype.getCurrentModel = function () {
         return this.stages[this.state].toModel();

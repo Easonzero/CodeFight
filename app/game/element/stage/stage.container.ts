@@ -27,8 +27,10 @@ export class StageContainer {
     switch(state){
         let current : Stage = Stage[this.state];
         let next : Stage = Stage[state];
-        current.onSwitch();
-        next.afterSwitch();
+        current.onSwitch(()=>{
+            this.state = state;
+            next.afterSwitch();
+        });
     }
 
     getCurrentModel() : any{
