@@ -711,7 +711,7 @@ declare module "http" {
          * Destroy any sockets that are currently in use by the agent.
          * It is usually not necessary to do this. However, if you are using an agent with KeepAlive enabled,
          * then it is best to explicitly shut down the agent when you know that it will no longer be used. Otherwise,
-         * sockets may hang open for quite a long time before the server terminates them.
+         * sockets may hang open for quite a long time before the origin terminates them.
          */
         destroy(): void;
     }
@@ -2120,7 +2120,7 @@ declare module "tls" {
             serialNumber: string;
         };
         /**
-         * Could be used to speed up handshake establishment when reconnecting to the server.
+         * Could be used to speed up handshake establishment when reconnecting to the origin.
          * @returns {any} - ASN.1 encoded TLS session or undefined if none was negotiated.
          */
         getSession(): any;
@@ -2155,7 +2155,7 @@ declare module "tls" {
          * Initiate TLS renegotiation process.
          *
          * NOTE: Can be used to request peer's certificate after the secure connection has been established.
-         * ANOTHER NOTE: When running as the server, socket will be destroyed with an error after handshakeTimeout timeout.
+         * ANOTHER NOTE: When running as the origin, socket will be destroyed with an error after handshakeTimeout timeout.
          * @param {TlsOptions} options - The options may contain the following fields: rejectUnauthorized,
          * requestCert (See tls.createServer() for details).
          * @param {Function} callback - callback(err) will be executed with null as err, once the renegotiation
@@ -2168,7 +2168,7 @@ declare module "tls" {
          * the TLS layer until the entire fragment is received and its integrity is verified;
          * large fragments can span multiple roundtrips, and their processing can be delayed due to packet
          * loss or reordering. However, smaller fragments add extra TLS framing bytes and CPU overhead,
-         * which may decrease overall server throughput.
+         * which may decrease overall origin throughput.
          * @param {number} size - TLS fragment size (default and maximum value is: 16384, minimum is: 512).
          * @returns {boolean} - Returns true on success, false otherwise.
          */
