@@ -6,6 +6,7 @@ var EventCode = (function () {
     function EventCode() {
     }
     EventCode.TEST_EVENT = 0;
+    EventCode.EDIT_CODE_CONTENT = 1;
     return EventCode;
 }());
 exports.EventCode = EventCode;

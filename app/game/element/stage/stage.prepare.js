@@ -8,17 +8,16 @@ var __extends = (this && this.__extends) || function (d, b) {
  * Created by eason on 16-9-22.
  */
 var stage_interface_1 = require("./stage.interface");
-var ai_container_1 = require("../ai/ai.container");
 var PrepareStage = (function (_super) {
     __extends(PrepareStage, _super);
     function PrepareStage() {
         _super.apply(this, arguments);
     }
     PrepareStage.prototype.onCreate = function () {
-        var ai = new ai_container_1.AI();
-        ai.call('/view/test', {});
-        ai.call('/action/test', {});
-        ai.call('/view/test', {});
+        var text = new PIXI.Text('Prepare...', { fill: 0xffffff, align: 'center' });
+        text.x = 390;
+        text.y = 200;
+        this.stage.addChild(text);
     };
     PrepareStage.prototype.onSwitch = function (fn) {
         fn();

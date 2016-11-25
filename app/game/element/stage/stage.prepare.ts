@@ -6,10 +6,10 @@ import {AI} from "../ai/ai.container";
 
 export class PrepareStage extends Stage{
     onCreate() {
-        let ai = new AI();
-        ai.call('/view/test',{});
-        ai.call('/action/test',{});
-        ai.call('/view/test',{});
+        let text = new PIXI.Text('Prepare...',{fill : 0xffffff, align : 'center'});
+        text.x = 390;
+        text.y = 200;
+        this.stage.addChild(text);
     }
 
     onSwitch(fn:()=>void) {
@@ -17,9 +17,11 @@ export class PrepareStage extends Stage{
     }
 
     afterSwitch() {
+
     }
 
     onDestory() {
+
     }
 
 }

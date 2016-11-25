@@ -3,17 +3,22 @@
  */
 import { Component } from '@angular/core';
 import {EventService,EventCode} from "../event/index";
+import {EventModal} from "../event/event.modal";
 
 @Component({
     moduleId: module.id,
     selector: 'view-editor',
-    template: '<h2>this is a editor</h2>'
+    templateUrl: './index.html'
 })
 
 export class EditorComponent {
+    submit:(code:string)=>void;
     constructor(eventService : EventService){
-        eventService.subscribe(EventCode.TEST_EVENT,(msg)=>{
-            console.log('Editor of module gets a test msg:'+msg);
-        })
+        this.submit = function(code:string){
+            console.log(code);
+            eventService.publish(
+                new EventModal(EventCode.EDIT_CODE_CONTENT,code)
+            )
+        };
     };
 }

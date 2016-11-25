@@ -19,6 +19,7 @@ export class GameService {
 
     gameLoop() : void {
         requestAnimationFrame(()=>this.gameLoop());
+
         this.renderer.render(this.container.getCurrentModel());
     }
 }

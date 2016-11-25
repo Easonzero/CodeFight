@@ -11,7 +11,9 @@ var stage_end_1 = require("./stage.end");
 var StageContainer = (function () {
     function StageContainer() {
         this.state = index_1.State.PREPARE;
-        this.stages = [new stage_prepare_1.PrepareStage(), new stage_gaming_1.GamingStage(), new stage_pause_1.PauseStage(), new stage_end_1.EndStage()];
+        this.stages = [
+            new stage_prepare_1.PrepareStage(), new stage_gaming_1.GamingStage(), new stage_pause_1.PauseStage(), new stage_end_1.EndStage()
+        ];
         for (var i = index_1.State.PREPARE; i < index_1.State.END + 1; i++) {
             this.stages[i].onCreate();
         }

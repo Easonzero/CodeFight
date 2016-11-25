@@ -13,18 +13,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require('@angular/core');
 var index_1 = require("../event/index");
+var event_modal_1 = require("../event/event.modal");
 var EditorComponent = (function () {
     function EditorComponent(eventService) {
-        eventService.subscribe(index_1.EventCode.TEST_EVENT, function (msg) {
-            console.log('Editor of module gets a test msg:' + msg);
-        });
+        this.submit = function (code) {
+            console.log(code);
+            eventService.publish(new event_modal_1.EventModal(index_1.EventCode.EDIT_CODE_CONTENT, code));
+        };
     }
     ;
     EditorComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'view-editor',
-            template: '<h2>this is a editor</h2>'
+            templateUrl: './index.html'
         }), 
         __metadata('design:paramtypes', [index_1.EventService])
     ], EditorComponent);

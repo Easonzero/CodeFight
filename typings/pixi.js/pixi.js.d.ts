@@ -909,7 +909,6 @@ declare namespace PIXI {
     //text
 
     export interface TextStyle {
-
         font?: string;
         fill?: string | number;
         align?: string;

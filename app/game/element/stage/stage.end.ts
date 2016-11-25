@@ -16,5 +16,4 @@ export class EndStage extends Stage{
 
     onDestory() {
     }
-
 }

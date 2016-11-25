@@ -10,7 +10,9 @@ import {EndStage} from "./stage.end";
 
 export class StageContainer {
     private state : State = State.PREPARE;
-    private stages : Stage[] = [new PrepareStage(),new GamingStage(),new PauseStage(),new EndStage()];
+    private stages : Stage[] = [
+        new PrepareStage(),new GamingStage(),new PauseStage(),new EndStage()
+    ];
 
     constructor(){
         for(let i : number = State.PREPARE;i < State.END+1;i++){
