@@ -15,7 +15,6 @@ export class EditorComponent {
     submit:(code:string)=>void;
     constructor(eventService : EventService){
         this.submit = function(code:string){
-            console.log(code);
             eventService.publish(
                 new EventModal(EventCode.EDIT_CODE_CONTENT,code)
             )

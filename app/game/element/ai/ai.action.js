@@ -7,7 +7,8 @@ var Action = (function () {
         this.model = model;
         this.view = view;
     }
-    Action.prototype.test = function (angvs) {
+    Action.prototype.test = function (argvs) {
+        console.log(argvs);
         this.model.position.x = 0;
         this.model.position.y = 1;
         console.log('test action call\n modify model data');

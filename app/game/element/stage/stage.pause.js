@@ -13,9 +13,10 @@ var PauseStage = (function (_super) {
     function PauseStage() {
         _super.apply(this, arguments);
     }
-    PauseStage.prototype.onCreate = function () {
+    PauseStage.prototype.onCreate = function (eventService) {
     };
-    PauseStage.prototype.onSwitch = function (fn) {
+    PauseStage.prototype.onLooper = function () { };
+    PauseStage.prototype.onSwitch = function (msg, fn) {
         fn();
     };
     PauseStage.prototype.afterSwitch = function () {

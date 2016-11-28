@@ -13,9 +13,10 @@ var EndStage = (function (_super) {
     function EndStage() {
         _super.apply(this, arguments);
     }
-    EndStage.prototype.onCreate = function () {
+    EndStage.prototype.onCreate = function (eventService) {
     };
-    EndStage.prototype.onSwitch = function (fn) {
+    EndStage.prototype.onLooper = function () { };
+    EndStage.prototype.onSwitch = function (msg, fn) {
         fn();
     };
     EndStage.prototype.afterSwitch = function () {

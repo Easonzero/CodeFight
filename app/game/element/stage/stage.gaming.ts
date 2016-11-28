@@ -2,18 +2,27 @@
  * Created by eason on 16-9-22.
  */
 import {Stage} from "./stage.interface";
+import {EventService,EventCode} from "../../../event/index";
 
 export class GamingStage extends Stage{
-    onCreate() {
+
+    onCreate(eventService:EventService) {
+
     }
 
-    onSwitch(fn:()=>void) {
+    onLooper(){
+
+    }
+
+    onSwitch(msg:any,fn:()=>void) {
         fn();
     }
 
     afterSwitch() {
+
     }
 
     onDestory() {
+
     }
 }

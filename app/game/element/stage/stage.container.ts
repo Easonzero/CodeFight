@@ -7,6 +7,7 @@ import {PrepareStage} from "./stage.prepare";
 import {GamingStage} from "./stage.gaming";
 import {PauseStage} from "./stage.pause";
 import {EndStage} from "./stage.end";
+import {EventService,EventCode} from "../../../event/index";
 
 export class StageContainer {
     private state : State = State.PREPARE;
@@ -14,9 +15,9 @@ export class StageContainer {
         new PrepareStage(),new GamingStage(),new PauseStage(),new EndStage()
     ];
 
-    constructor(){
+    constructor(eventService:EventService){
         for(let i : number = State.PREPARE;i < State.END+1;i++){
-            this.stages[i].onCreate();
+            this.stages[i].onCreate(eventService);
         }
     }
 
@@ -26,13 +27,17 @@ export class StageContainer {
         }
     }
 
-    switch(state){
-        let current : Stage = Stage[this.state];
-        let next : Stage = Stage[state];
-        current.onSwitch(()=>{
+    switch(state,msg){
+        let current : Stage = this.stages[this.state];
+        let next : Stage = this.stages[state];
+        current.onSwitch(msg,()=>{
             this.state = state;
             next.afterSwitch();
         });
+    }
+
+    looper(){
+        this.stages[this.state].onLooper();
     }
 
     getCurrentModel() : any{

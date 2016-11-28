@@ -17,7 +17,6 @@ var event_modal_1 = require("../event/event.modal");
 var EditorComponent = (function () {
     function EditorComponent(eventService) {
         this.submit = function (code) {
-            console.log(code);
             eventService.publish(new event_modal_1.EventModal(index_1.EventCode.EDIT_CODE_CONTENT, code));
         };
     }

@@ -13,9 +13,11 @@ var GamingStage = (function (_super) {
     function GamingStage() {
         _super.apply(this, arguments);
     }
-    GamingStage.prototype.onCreate = function () {
+    GamingStage.prototype.onCreate = function (eventService) {
     };
-    GamingStage.prototype.onSwitch = function (fn) {
+    GamingStage.prototype.onLooper = function () {
+    };
+    GamingStage.prototype.onSwitch = function (msg, fn) {
         fn();
     };
     GamingStage.prototype.afterSwitch = function () {

@@ -13,13 +13,14 @@ var PrepareStage = (function (_super) {
     function PrepareStage() {
         _super.apply(this, arguments);
     }
-    PrepareStage.prototype.onCreate = function () {
+    PrepareStage.prototype.onCreate = function (eventService) {
         var text = new PIXI.Text('Prepare...', { fill: 0xffffff, align: 'center' });
         text.x = 390;
         text.y = 200;
         this.stage.addChild(text);
     };
-    PrepareStage.prototype.onSwitch = function (fn) {
+    PrepareStage.prototype.onLooper = function () { };
+    PrepareStage.prototype.onSwitch = function (msg, fn) {
         fn();
     };
     PrepareStage.prototype.afterSwitch = function () {

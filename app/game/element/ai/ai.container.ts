@@ -9,15 +9,29 @@ export class AI{
     private action : Action;
     private model : Model;
     private view : View;
+    private worker : Worker;
     constructor(){
         this.model = new Model();
         this.view = new View(this.model);
         this.action = new Action(this.model,this.view);
+
+        this.worker = new Worker('./app/remote/ai.remote.js');
+
+        this.worker.postMessage(`({onStart:function(){
+            console.log('on start');
+            this.test(0);
+        }})`);
+
+        this.worker.onmessage = this.call(this);
     }
 
-    call(fn:string,argvs:any){
-        let arr:string[] = fn.split('/');
-        if(arr.length>3||arr[1]=='model') return;
-        this[arr[1]][arr[2]](argvs);
+    call(self:AI){
+        return (oEvent:any)=>{
+            console.log(oEvent.data)
+            let o = eval(oEvent.data);
+            let arr:string[] = o.fn.split('/');
+            if(arr.length>3||arr[1]=='model') return;
+            self[arr[1]][arr[2]](...o.argvs);
+        }
     }
 }
