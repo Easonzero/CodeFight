@@ -7,11 +7,9 @@ var Action = (function () {
         this.model = model;
         this.view = view;
     }
-    Action.prototype.test = function (argvs) {
-        console.log(argvs);
-        this.model.position.x = 0;
-        this.model.position.y = 1;
-        console.log('test action call\n modify model data');
+    Action.prototype.up = function () {
+        if (this.model.position.y > 0)
+            this.model.position.y--;
     };
     return Action;
 }());

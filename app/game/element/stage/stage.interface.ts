@@ -11,9 +11,9 @@ export abstract class Stage {
 
     abstract onLooper();
 
-    abstract onSwitch(msg:any,fn:()=>void);
+    abstract onSwitch(fn:()=>void);
 
-    abstract afterSwitch();
+    abstract afterSwitch(msg:any);
 
     abstract onDestory();
 

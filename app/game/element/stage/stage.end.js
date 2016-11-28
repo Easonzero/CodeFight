@@ -16,10 +16,10 @@ var EndStage = (function (_super) {
     EndStage.prototype.onCreate = function (eventService) {
     };
     EndStage.prototype.onLooper = function () { };
-    EndStage.prototype.onSwitch = function (msg, fn) {
+    EndStage.prototype.onSwitch = function (fn) {
         fn();
     };
-    EndStage.prototype.afterSwitch = function () {
+    EndStage.prototype.afterSwitch = function (msg) {
     };
     EndStage.prototype.onDestory = function () {
     };

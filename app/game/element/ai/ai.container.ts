@@ -17,21 +17,33 @@ export class AI{
 
         this.worker = new Worker('./app/remote/ai.remote.js');
 
-        this.worker.postMessage(`({onStart:function(){
-            console.log('on start');
-            this.test(0);
-        }})`);
+        this.worker.postMessage({
+            'e':'CREATE',
+            'msg':`({onStart:function(){
+            console.log('on start');},
+            onLooper:function(){
+            this.up();
+            this.position.x=0;
+            }})`
+        });
 
         this.worker.onmessage = this.call(this);
     }
 
+    lifeCycle(event){
+        this.worker.postMessage({
+            'e':event,
+            'msg':{
+                position:this.model.position
+            }
+        });
+    }
+
     call(self:AI){
         return (oEvent:any)=>{
-            console.log(oEvent.data)
-            let o = eval(oEvent.data);
-            let arr:string[] = o.fn.split('/');
+            let arr:string[] = oEvent.data.fn.split('/');
             if(arr.length>3||arr[1]=='model') return;
-            self[arr[1]][arr[2]](...o.argvs);
+            self[arr[1]][arr[2]](...oEvent.data.argvs);
         }
     }
 }

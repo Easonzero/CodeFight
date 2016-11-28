@@ -10,11 +10,11 @@ export class PauseStage extends Stage{
 
     onLooper(){}
 
-    onSwitch(msg:any,fn:()=>void) {
+    onSwitch(fn:()=>void) {
         fn();
     }
 
-    afterSwitch() {
+    afterSwitch(msg:any) {
     }
 
     onDestory() {

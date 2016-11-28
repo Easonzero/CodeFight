@@ -20,10 +20,10 @@ var PrepareStage = (function (_super) {
         this.stage.addChild(text);
     };
     PrepareStage.prototype.onLooper = function () { };
-    PrepareStage.prototype.onSwitch = function (msg, fn) {
+    PrepareStage.prototype.onSwitch = function (fn) {
         fn();
     };
-    PrepareStage.prototype.afterSwitch = function () {
+    PrepareStage.prototype.afterSwitch = function (msg) {
     };
     PrepareStage.prototype.onDestory = function () {
     };

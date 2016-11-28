@@ -4,7 +4,7 @@
 "use strict";
 var Model = (function () {
     function Model() {
-        this.position = { x: -1, y: -1 };
+        this.position = { x: -1, y: 100 };
     }
     return Model;
 }());

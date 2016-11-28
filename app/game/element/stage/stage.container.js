@@ -24,11 +24,13 @@ var StageContainer = (function () {
     };
     StageContainer.prototype.switch = function (state, msg) {
         var _this = this;
+        if (this.state == state)
+            return;
         var current = this.stages[this.state];
         var next = this.stages[state];
-        current.onSwitch(msg, function () {
+        current.onSwitch(function () {
             _this.state = state;
-            next.afterSwitch();
+            next.afterSwitch(msg);
         });
     };
     StageContainer.prototype.looper = function () {

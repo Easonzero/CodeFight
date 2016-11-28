@@ -16,10 +16,10 @@ var PauseStage = (function (_super) {
     PauseStage.prototype.onCreate = function (eventService) {
     };
     PauseStage.prototype.onLooper = function () { };
-    PauseStage.prototype.onSwitch = function (msg, fn) {
+    PauseStage.prototype.onSwitch = function (fn) {
         fn();
     };
-    PauseStage.prototype.afterSwitch = function () {
+    PauseStage.prototype.afterSwitch = function (msg) {
     };
     PauseStage.prototype.onDestory = function () {
     };

@@ -11,17 +11,26 @@ var AI = (function () {
         this.view = new ai_view_1.View(this.model);
         this.action = new ai_action_1.Action(this.model, this.view);
         this.worker = new Worker('./app/remote/ai.remote.js');
-        this.worker.postMessage("({onStart:function(){\n            console.log('on start');\n            this.test(0);\n        }})");
+        this.worker.postMessage({
+            'e': 'CREATE',
+            'msg': "({onStart:function(){\n            console.log('on start');},\n            onLooper:function(){\n            this.up();\n            this.position.x=0;\n            }})"
+        });
         this.worker.onmessage = this.call(this);
     }
+    AI.prototype.lifeCycle = function (event) {
+        this.worker.postMessage({
+            'e': event,
+            'msg': {
+                position: this.model.position
+            }
+        });
+    };
     AI.prototype.call = function (self) {
         return function (oEvent) {
-            console.log(oEvent.data);
-            var o = eval(oEvent.data);
-            var arr = o.fn.split('/');
+            var arr = oEvent.data.fn.split('/');
             if (arr.length > 3 || arr[1] == 'model')
                 return;
-            (_a = self[arr[1]])[arr[2]].apply(_a, o.argvs);
+            (_a = self[arr[1]])[arr[2]].apply(_a, oEvent.data.argvs);
             var _a;
         };
     };

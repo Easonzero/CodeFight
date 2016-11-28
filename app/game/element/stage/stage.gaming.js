@@ -8,19 +8,28 @@ var __extends = (this && this.__extends) || function (d, b) {
  * Created by eason on 16-9-22.
  */
 var stage_interface_1 = require("./stage.interface");
+var ai_container_1 = require("../ai/ai.container");
 var GamingStage = (function (_super) {
     __extends(GamingStage, _super);
     function GamingStage() {
         _super.apply(this, arguments);
     }
     GamingStage.prototype.onCreate = function (eventService) {
+        this.ais = [];
     };
     GamingStage.prototype.onLooper = function () {
+        for (var _i = 0, _a = this.ais; _i < _a.length; _i++) {
+            var ai = _a[_i];
+            ai.lifeCycle('LOOP');
+        }
     };
-    GamingStage.prototype.onSwitch = function (msg, fn) {
+    GamingStage.prototype.onSwitch = function (fn) {
         fn();
     };
-    GamingStage.prototype.afterSwitch = function () {
+    GamingStage.prototype.afterSwitch = function (msg) {
+        var ai = new ai_container_1.AI();
+        this.ais.push(ai);
+        ai.lifeCycle('START');
     };
     GamingStage.prototype.onDestory = function () {
     };

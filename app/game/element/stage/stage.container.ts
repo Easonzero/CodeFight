@@ -28,11 +28,13 @@ export class StageContainer {
     }
 
     switch(state,msg){
+        if(this.state==state) return;
+
         let current : Stage = this.stages[this.state];
         let next : Stage = this.stages[state];
-        current.onSwitch(msg,()=>{
+        current.onSwitch(()=>{
             this.state = state;
-            next.afterSwitch();
+            next.afterSwitch(msg);
         });
     }
 

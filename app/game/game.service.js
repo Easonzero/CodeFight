@@ -15,13 +15,11 @@ var core_1 = require('@angular/core');
 var index_1 = require("./element/stage/index");
 var index_2 = require("../event/index");
 var define_stage_1 = require("./define/define.stage");
-var ai_container_1 = require("./element/ai/ai.container");
 var GameService = (function () {
     function GameService(eventService) {
         var _this = this;
         this.container = new index_1.StageContainer(eventService);
         this.renderer = PIXI.autoDetectRenderer(900, 500);
-        var ai = new ai_container_1.AI();
         eventService.subscribe(index_2.EventCode.EDIT_CODE_CONTENT, function (code) {
             _this.container.switch(define_stage_1.State.GAMING, code);
         });
