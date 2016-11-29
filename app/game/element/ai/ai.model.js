@@ -1,10 +1,10 @@
 /**
- * Created by eason on 16-9-22.
+ * Created by eason on 16-11-29.
  */
 "use strict";
 var Model = (function () {
     function Model() {
-        this.position = { x: -1, y: 100 };
+        this.life = 100;
     }
     return Model;
 }());

@@ -28,6 +28,8 @@ var GamingStage = (function (_super) {
     };
     GamingStage.prototype.afterSwitch = function (msg) {
         var ai = new ai_container_1.AI();
+        ai.lifeCycle('CREATE', "({onStart:function(){\n            console.log('on start');},\n            onLooper:function(){\n            this.up();\n            this.life=1000;\n            }})");
+        this.stage.addChild(ai.toModel());
         this.ais.push(ai);
         ai.lifeCycle('START');
     };

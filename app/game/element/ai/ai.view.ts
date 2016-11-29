@@ -4,9 +4,14 @@ import {Model} from "./ai.model";
  */
 
 export class View {
-    constructor(protected model:Model){}
+    constructor(protected model:Model){
+        this.model.sprite = new PIXI.Sprite(this.__draw());
+    }
 
-    test(angvs:{}){
-        console.log('test view call\n get model('+this.model.position.x+','+this.model.position.y+')');
+    __draw() : PIXI.Texture{
+        let graphics : PIXI.Graphics = new PIXI.Graphics();
+        graphics.beginFill(0xffffff);
+        graphics.drawCircle(5,5,5);
+        return graphics.generateCanvasTexture(1,1);
     }
 }

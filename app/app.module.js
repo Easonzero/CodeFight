@@ -18,12 +18,13 @@ var index_1 = require('./game/index');
 var index_2 = require('./editor/index');
 var index_3 = require('./command/index');
 var index_4 = require('./menu-bar/index');
+var material_1 = require('@angular/material');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule],
+            imports: [platform_browser_1.BrowserModule, material_1.MaterialModule.forRoot()],
             declarations: [app_component_1.AppComponent, index_1.GameComponent, index_2.EditorComponent,
                 index_3.CommandComponent, index_4.MenuBarComponent],
             bootstrap: [app_component_1.AppComponent]

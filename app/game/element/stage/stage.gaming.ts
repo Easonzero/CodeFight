@@ -23,6 +23,15 @@ export class GamingStage extends Stage{
 
     afterSwitch(msg:any) {
         let ai : AI = new AI();
+
+        ai.lifeCycle('CREATE',`({onStart:function(){
+            console.log('on start');},
+            onLooper:function(){
+            this.up();
+            this.life=1000;
+            }})`);
+
+        this.stage.addChild(ai.toModel());
         this.ais.push(ai);
         ai.lifeCycle('START');
     }

@@ -5,10 +5,12 @@ import {Model} from "./ai.model";
  */
 
 export class Action {
-    constructor(protected model:Model,protected view:View){}
+    constructor(protected model:Model,protected view:View){
+        this.model.sprite.position.y = 100;
+    }
 
     up(){
-        if(this.model.position.y>0)
-            this.model.position.y--;
+        if(this.model.sprite.position.y>0)
+            this.model.sprite.position.y--;
     }
 }

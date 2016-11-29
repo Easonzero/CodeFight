@@ -9,7 +9,7 @@ var stage_pause_1 = require("./stage.pause");
 var stage_end_1 = require("./stage.end");
 var StageContainer = (function () {
     function StageContainer(eventService) {
-        this.state = index_1.State.PREPARE;
+        this.state = index_1.State.PREPARE; //当前场景状态
         this.stages = [
             new stage_prepare_1.PrepareStage(), new stage_gaming_1.GamingStage(), new stage_pause_1.PauseStage(), new stage_end_1.EndStage()
         ];
@@ -17,11 +17,13 @@ var StageContainer = (function () {
             this.stages[i].onCreate(eventService);
         }
     }
+    //销毁所有场景
     StageContainer.prototype.destory = function () {
         for (var i = index_1.State.PREPARE; i < index_1.State.END + 1; i++) {
             this.stages[i].onDestory();
         }
     };
+    //切换场景方法，待重写
     StageContainer.prototype.switch = function (state, msg) {
         var _this = this;
         if (this.state == state)
@@ -33,6 +35,7 @@ var StageContainer = (function () {
             next.afterSwitch(msg);
         });
     };
+    //场景主循环
     StageContainer.prototype.looper = function () {
         this.stages[this.state].onLooper();
     };

@@ -18,9 +18,11 @@ var EventService = (function () {
         this.eventSource = new Subject_1.Subject();
         this.event$ = this.eventSource.asObservable();
     }
+    //事件通知方法
     EventService.prototype.publish = function (event) {
         this.eventSource.next(event);
     };
+    //注册事件方法
     EventService.prototype.subscribe = function (event, fn) {
         this.event$.subscribe(function (e) {
             if (e.eventCode !== event)

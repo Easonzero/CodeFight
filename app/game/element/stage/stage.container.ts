@@ -10,7 +10,7 @@ import {EndStage} from "./stage.end";
 import {EventService,EventCode} from "../../../event/index";
 
 export class StageContainer {
-    private state : State = State.PREPARE;
+    private state : State = State.PREPARE;//当前场景状态
     private stages : Stage[] = [
         new PrepareStage(),new GamingStage(),new PauseStage(),new EndStage()
     ];
@@ -20,13 +20,13 @@ export class StageContainer {
             this.stages[i].onCreate(eventService);
         }
     }
-
+    //销毁所有场景
     destory(){
         for(let i : number = State.PREPARE;i < State.END+1;i++){
             this.stages[i].onDestory();
         }
     }
-
+    //切换场景方法，待重写
     switch(state,msg){
         if(this.state==state) return;
 
@@ -37,7 +37,7 @@ export class StageContainer {
             next.afterSwitch(msg);
         });
     }
-
+    //场景主循环
     looper(){
         this.stages[this.state].onLooper();
     }

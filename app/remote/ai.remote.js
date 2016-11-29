@@ -1,28 +1,30 @@
 /**
  * Created by eason on 16-11-28.
  */
-
-let ai = {
+//ai的api列表
+let mAI = {
     up:()=>{postMessage({"fn":"/action/up","argvs":[]})}
 };
 
 onmessage = function (oEvent) {
     let event = oEvent.data.e;
-    let msg = oEvent.data.msg;
+    let ai = oEvent.data.ai;
+    let argvs = oEvent.data.argvs;
     switch(event){
         case 'CREATE':
-            let o = eval(msg);
-            ai.onStart = o.onStart||function(){};
-            ai.onLooper = o.onLooper||function(){};
+            let o = eval(argvs[0]);
+            mAI.onStart = o.onStart||function(){};
+            mAI.onLooper = o.onLooper||function(){};
+            mAI.onHit = o.onHit||function(){};
+            mAI.onScan = o.onScan||function(){};
             break;
         case 'START':
-            ai.position = msg.position;
-            ai.onStart();
+            mAI.life = ai.life;
+            mAI.onStart();
             break;
         case 'LOOP':
-            ai.position = msg.position;
-            console.log(ai.position);
-            ai.onLooper();
+            mAI.life = ai.life;
+            mAI.onLooper();
             break;
     }
 };

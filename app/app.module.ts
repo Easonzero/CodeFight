@@ -9,9 +9,10 @@ import { GameComponent } from './game/index';
 import { EditorComponent } from './editor/index';
 import { CommandComponent } from './command/index';
 import { MenuBarComponent } from './menu-bar/index';
+import { MaterialModule } from '@angular/material';
 
 @NgModule({
-  imports: [ BrowserModule ],
+  imports: [ BrowserModule,MaterialModule.forRoot() ],
   declarations: [ AppComponent, GameComponent, EditorComponent,
       CommandComponent,MenuBarComponent],
   bootstrap: [ AppComponent ]

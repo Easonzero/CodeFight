@@ -6,10 +6,11 @@ var Action = (function () {
     function Action(model, view) {
         this.model = model;
         this.view = view;
+        this.model.sprite.position.y = 100;
     }
     Action.prototype.up = function () {
-        if (this.model.position.y > 0)
-            this.model.position.y--;
+        if (this.model.sprite.position.y > 0)
+            this.model.sprite.position.y--;
     };
     return Action;
 }());
