@@ -13,6 +13,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require('@angular/core');
 var Subject_1 = require('rxjs/Subject');
+//利用rxjs模块实现的事件通知注册机制
 var EventService = (function () {
     function EventService() {
         this.eventSource = new Subject_1.Subject();

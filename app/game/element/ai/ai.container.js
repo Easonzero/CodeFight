@@ -10,9 +10,9 @@ var AI = (function () {
         this.model = new ai_model_1.Model();
         this.view = new ai_view_1.View(this.model);
         this.action = new ai_action_1.Action(this.model, this.view);
+        //初始化用户线程
         this.worker = new Worker('./app/remote/ai.remote.js');
         this.worker.onmessage = this.call(this);
-        this.worker.postMessage('');
     }
     //ai生命周期方法
     AI.prototype.lifeCycle = function (event) {

@@ -4,7 +4,7 @@
 "use strict";
 var Model = (function () {
     function Model() {
-        this.life = 100;
+        this.life = 100; //生命值
     }
     return Model;
 }());

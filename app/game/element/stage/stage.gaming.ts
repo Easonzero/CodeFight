@@ -6,7 +6,7 @@ import {EventService,EventCode} from "../../../event/index";
 import {AI} from "../ai/ai.container";
 
 export class GamingStage extends Stage{
-    ais : AI[];
+    ais : AI[];//ai数组
     onCreate(eventService:EventService) {
         this.ais = [];
     }
@@ -23,7 +23,7 @@ export class GamingStage extends Stage{
 
     afterSwitch(msg:any) {
         let ai : AI = new AI();
-
+        //测试代码
         ai.lifeCycle('CREATE',`({onStart:function(){
             console.log('on start');},
             onLooper:function(){

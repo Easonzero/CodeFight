@@ -14,10 +14,9 @@ export class AI{
         this.model = new Model();
         this.view = new View(this.model);
         this.action = new Action(this.model,this.view);
-
+        //初始化用户线程
         this.worker = new Worker('./app/remote/ai.remote.js');
         this.worker.onmessage = this.call(this);
-        this.worker.postMessage('');
     }
     //ai生命周期方法
     lifeCycle(event,...argvs){

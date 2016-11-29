@@ -8,8 +8,8 @@ import {State} from "./define/define.stage";
 
 @Injectable()
 export class GameService {
-    private renderer : PIXI.SystemRenderer;
-    private container : StageContainer;
+    private renderer : PIXI.SystemRenderer;//pixi渲染器
+    private container : StageContainer;//pixi数据容器
     constructor(eventService:EventService){
         this.container = new StageContainer(eventService);
         this.renderer = PIXI.autoDetectRenderer(900, 500);

@@ -7,7 +7,7 @@ export class View {
     constructor(protected model:Model){
         this.model.sprite = new PIXI.Sprite(this.__draw());
     }
-
+    //模型绘制方法
     __draw() : PIXI.Texture{
         let graphics : PIXI.Graphics = new PIXI.Graphics();
         graphics.beginFill(0xffffff);

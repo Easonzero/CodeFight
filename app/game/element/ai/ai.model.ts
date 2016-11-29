@@ -4,5 +4,5 @@
 
 export class Model {
     sprite:PIXI.Sprite;
-    life:number=100;
+    life:number=100;//生命值
 }

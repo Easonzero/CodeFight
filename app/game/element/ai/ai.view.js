@@ -7,6 +7,7 @@ var View = (function () {
         this.model = model;
         this.model.sprite = new PIXI.Sprite(this.__draw());
     }
+    //模型绘制方法
     View.prototype.__draw = function () {
         var graphics = new PIXI.Graphics();
         graphics.beginFill(0xffffff);

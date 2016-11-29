@@ -11,7 +11,7 @@ import {GameService} from "./game.service";
     template: '<section #myCanvas></section>',
     providers: [GameService]
 })
-
+//游戏部分组件，引入游戏的主体部分GameService
 export class GameComponent implements AfterViewInit {
     @ViewChild("myCanvas")
     private myCanvas;

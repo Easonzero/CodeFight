@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 import {EventModal} from "./event.modal";
 
-
+//利用rxjs模块实现的事件通知注册机制
 @Injectable()
 export class EventService {
 
