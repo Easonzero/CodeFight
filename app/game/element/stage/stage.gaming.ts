@@ -3,12 +3,17 @@
  */
 import {Stage} from "./stage.interface";
 import {EventService,EventCode} from "../../../event/index";
-import {AI} from "../ai/ai.container";
+import {AI} from "../ai/index";
+import {Config} from "../../define/index";
+import {BaseMap} from "../map/index";
 
 export class GamingStage extends Stage{
     ais : AI[];//ai数组
+    map : BaseMap;
     onCreate(eventService:EventService) {
         this.ais = [];
+        this.map = new BaseMap(Config.WIDTH,Config.HEIGHT);
+        this.stage.addChild(this.map.toModel());
     }
 
     onLooper(){
@@ -27,7 +32,7 @@ export class GamingStage extends Stage{
         ai.lifeCycle('CREATE',`({onStart:function(){
             console.log('on start');},
             onLooper:function(){
-            this.up();
+            this.ahead();
             this.life=1000;
             }})`);
 

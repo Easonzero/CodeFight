@@ -3,7 +3,8 @@
  */
 //ai的api列表
 let mAI = {
-    up:()=>{postMessage({"fn":"/action/up","argvs":[]})}
+    ahead:()=>{postMessage({"fn":"/action/ahead","argvs":[]})},
+    rotation:(deg)=>{postMessage({"fn":"/action/rotation","argvs":[deg]})}
 };
 
 onmessage = function (oEvent) {

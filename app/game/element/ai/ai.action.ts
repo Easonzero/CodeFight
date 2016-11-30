@@ -9,8 +9,13 @@ export class Action {
         this.model.sprite.position.y = 100;
     }
 
-    up(){
-        if(this.model.sprite.position.y>0)
-            this.model.sprite.position.y--;
+    ahead(){
+        let sprite = this.model.sprite;
+        sprite.position.x+=Math.cos(sprite.rotation);
+        sprite.position.y+=Math.sin(sprite.rotation);
+    }
+
+    rotation(deg){
+        this.model.sprite.rotation+=deg;
     }
 }

@@ -14,14 +14,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var index_1 = require("./element/stage/index");
 var index_2 = require("../event/index");
-var define_stage_1 = require("./define/define.stage");
+var index_3 = require("./define/index");
 var GameService = (function () {
     function GameService(eventService) {
         var _this = this;
         this.container = new index_1.StageContainer(eventService);
-        this.renderer = PIXI.autoDetectRenderer(900, 500);
+        this.renderer = PIXI.autoDetectRenderer(index_3.Config.WIDTH, index_3.Config.HEIGHT);
         eventService.subscribe(index_2.EventCode.EDIT_CODE_CONTENT, function (code) {
-            _this.container.switch(define_stage_1.State.GAMING, code);
+            _this.container.switch(index_3.State.GAMING, code);
         });
     }
     GameService.prototype.getDomView = function () {

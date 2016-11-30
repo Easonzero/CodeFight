@@ -8,7 +8,9 @@ var __extends = (this && this.__extends) || function (d, b) {
  * Created by eason on 16-9-22.
  */
 var stage_interface_1 = require("./stage.interface");
-var ai_container_1 = require("../ai/ai.container");
+var index_1 = require("../ai/index");
+var index_2 = require("../../define/index");
+var index_3 = require("../map/index");
 var GamingStage = (function (_super) {
     __extends(GamingStage, _super);
     function GamingStage() {
@@ -16,6 +18,8 @@ var GamingStage = (function (_super) {
     }
     GamingStage.prototype.onCreate = function (eventService) {
         this.ais = [];
+        this.map = new index_3.BaseMap(index_2.Config.WIDTH, index_2.Config.HEIGHT);
+        this.stage.addChild(this.map.toModel());
     };
     GamingStage.prototype.onLooper = function () {
         for (var _i = 0, _a = this.ais; _i < _a.length; _i++) {
@@ -27,9 +31,9 @@ var GamingStage = (function (_super) {
         fn();
     };
     GamingStage.prototype.afterSwitch = function (msg) {
-        var ai = new ai_container_1.AI();
+        var ai = new index_1.AI();
         //测试代码
-        ai.lifeCycle('CREATE', "({onStart:function(){\n            console.log('on start');},\n            onLooper:function(){\n            this.up();\n            this.life=1000;\n            }})");
+        ai.lifeCycle('CREATE', "({onStart:function(){\n            console.log('on start');},\n            onLooper:function(){\n            this.ahead();\n            this.life=1000;\n            }})");
         this.stage.addChild(ai.toModel());
         this.ais.push(ai);
         ai.lifeCycle('START');

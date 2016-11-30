@@ -8,9 +8,13 @@ var Action = (function () {
         this.view = view;
         this.model.sprite.position.y = 100;
     }
-    Action.prototype.up = function () {
-        if (this.model.sprite.position.y > 0)
-            this.model.sprite.position.y--;
+    Action.prototype.ahead = function () {
+        var sprite = this.model.sprite;
+        sprite.position.x += Math.cos(sprite.rotation);
+        sprite.position.y += Math.sin(sprite.rotation);
+    };
+    Action.prototype.rotation = function (deg) {
+        this.model.sprite.rotation += deg;
     };
     return Action;
 }());

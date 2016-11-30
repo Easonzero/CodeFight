@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 import {StageContainer} from "./element/stage/index";
 import {EventService,EventCode} from "../event/index";
-import {State} from "./define/define.stage";
+import {State,Config} from "./define/index";
 
 @Injectable()
 export class GameService {
@@ -12,7 +12,7 @@ export class GameService {
     private container : StageContainer;//pixi数据容器
     constructor(eventService:EventService){
         this.container = new StageContainer(eventService);
-        this.renderer = PIXI.autoDetectRenderer(900, 500);
+        this.renderer = PIXI.autoDetectRenderer(Config.WIDTH, Config.HEIGHT);
         eventService.subscribe(EventCode.EDIT_CODE_CONTENT,(code)=>{
             this.container.switch(State.GAMING,code);
         });
