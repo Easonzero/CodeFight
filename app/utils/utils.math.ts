@@ -3,11 +3,11 @@
  */
 export class MathUtils{
     static computeIntersection(
-        p1:{x:number,y:number},
-        p2:{x:number,y:number},
-        start:{x:number,y:number},
-        dir:{x:number,y:number}
-    ):{x:number,y:number}{
+        p1:PIXI.Point,
+        p2:PIXI.Point,
+        start:PIXI.Point,
+        dir:PIXI.Point
+    ):PIXI.Point{
         let k = 0,t = 0;
         if(p2.x!==p1.x){
             t = (p2.y-p1.y)/(p2.x-p1.x);
@@ -15,6 +15,10 @@ export class MathUtils{
         }else{
             k = (p1.x-start.x)/dir.x
         }
-        return {x:start.x+k*dir.x,y:start.y+k*dir.y};
+        return new PIXI.Point(start.x+k*dir.x,start.y+k*dir.y);
+    }
+
+    static rotation(vec:PIXI.Point,deg:number):PIXI.Point{
+        return new PIXI.Point(vec.x*Math.cos(deg)-vec.y*Math.sin(deg),vec.y*Math.cos(deg)+vec.x*Math.sin(deg));
     }
 }

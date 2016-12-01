@@ -7,6 +7,7 @@ import {AI} from "../ai/index";
 import {Config} from "../../define/index";
 import {BaseMap} from "../map/index";
 import {RayTracer} from "../element.raytracer";
+import {MathUtils} from "../../../utils/utils.math";
 
 export class GamingStage extends Stage{
     ais : AI[];//ai数组
@@ -26,7 +27,13 @@ export class GamingStage extends Stage{
             this.rayTracing.clear();
             for(let wall of this.map.walls){
                 for(let point of wall.points){
-                    this.rayTracing.trace(ai.emitRay(point),this.map);
+                    let dir = new PIXI.Point(point.x-ai.toModel().position.x,point.y-ai.toModel().position.y);
+                    let isvec = this.rayTracing.trace(ai.emitRay(dir),this.map);
+
+                    if(isvec){
+                        this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,0.001)),this.map);
+                        this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,-0.001)),this.map);
+                    }
                 }
             }
         }

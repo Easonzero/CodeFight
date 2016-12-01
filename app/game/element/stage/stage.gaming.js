@@ -12,6 +12,7 @@ var index_1 = require("../ai/index");
 var index_2 = require("../../define/index");
 var index_3 = require("../map/index");
 var element_raytracer_1 = require("../element.raytracer");
+var utils_math_1 = require("../../../utils/utils.math");
 var GamingStage = (function (_super) {
     __extends(GamingStage, _super);
     function GamingStage() {
@@ -33,7 +34,12 @@ var GamingStage = (function (_super) {
                 var wall = _c[_b];
                 for (var _d = 0, _e = wall.points; _d < _e.length; _d++) {
                     var point = _e[_d];
-                    this.rayTracing.trace(ai.emitRay(point), this.map);
+                    var dir = new PIXI.Point(point.x - ai.toModel().position.x, point.y - ai.toModel().position.y);
+                    var isvec = this.rayTracing.trace(ai.emitRay(dir), this.map);
+                    if (isvec) {
+                        this.rayTracing.trace(ai.emitRay(utils_math_1.MathUtils.rotation(dir, 0.001)), this.map);
+                        this.rayTracing.trace(ai.emitRay(utils_math_1.MathUtils.rotation(dir, -0.001)), this.map);
+                    }
                 }
             }
         }

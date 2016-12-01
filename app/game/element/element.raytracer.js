@@ -13,7 +13,9 @@ exports.Ray = Ray;
 var RayTracer = (function () {
     function RayTracer() {
         this.graphics = new PIXI.Graphics();
+        this.points = [];
         this.graphics.lineStyle(1, 0xffffff);
+        this.graphics.beginFill(0xeeeeee);
     }
     RayTracer.prototype.intersections = function (ray, map) {
         var closest = 100000;
@@ -31,12 +33,18 @@ var RayTracer = (function () {
         var isect = this.intersections(ray, map);
         if (isect) {
             this.graphics.moveTo(ray.start.x, ray.start.y)
-                .lineTo(isect.x, isect.y);
+                .lineTo(isect.point.x, isect.point.y);
+            this.points.push(isect.point);
+            return isect.point.x - ray.start.x == ray.dir.x &&
+                isect.point.y - ray.start.y == ray.dir.y;
         }
+        return false;
     };
     RayTracer.prototype.clear = function () {
         this.graphics.clear();
         this.graphics.lineStyle(1, 0xffffff);
+        this.graphics.beginFill(0xeeeeee);
+        this.points.length = 0;
     };
     RayTracer.prototype.toModel = function () {
         return this.graphics;

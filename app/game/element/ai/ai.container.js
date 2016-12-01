@@ -41,8 +41,8 @@ var AI = (function () {
             var _a;
         };
     };
-    AI.prototype.emitRay = function (aim) {
-        return new element_raytracer_1.Ray({ x: this.model.sprite.x, y: this.model.sprite.y }, { x: aim.x - this.model.sprite.x, y: aim.y - this.model.sprite.y });
+    AI.prototype.emitRay = function (direction) {
+        return new element_raytracer_1.Ray(new PIXI.Point(this.model.sprite.x, this.model.sprite.y), direction);
     };
     AI.prototype.backup = function () {
         this.model.sprite.position.x = this.model.history.x;

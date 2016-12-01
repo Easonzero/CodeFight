@@ -14,7 +14,10 @@ var MathUtils = (function () {
         else {
             k = (p1.x - start.x) / dir.x;
         }
-        return { x: start.x + k * dir.x, y: start.y + k * dir.y };
+        return new PIXI.Point(start.x + k * dir.x, start.y + k * dir.y);
+    };
+    MathUtils.rotation = function (vec, deg) {
+        return new PIXI.Point(vec.x * Math.cos(deg) - vec.y * Math.sin(deg), vec.y * Math.cos(deg) + vec.x * Math.sin(deg));
     };
     return MathUtils;
 }());

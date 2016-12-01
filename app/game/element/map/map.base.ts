@@ -9,10 +9,9 @@ export class BaseMap{
         this.container = new PIXI.Container();
         this.walls = [];
 
-        let graphics : PIXI.Graphics = new PIXI.Graphics();
-        graphics.beginFill(0x000000);
-        graphics.drawRect(0,0,width,height);
-        this.container.addChild(graphics);
+        let wall = new Wall(0,0,width,height);
+        this.container.addChild(wall.toModel());
+        this.walls.push(wall);
 
         for(let i=0;i<5;i++){
             let wall = new Wall(i*width/5,Math.random()*(height-100),100,100);

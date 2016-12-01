@@ -1,11 +1,12 @@
 import {Ray} from "../element.raytracer";
 import {MathUtils} from "../../../utils/utils.math";
+import {close} from "fs";
 /**
  * Created by eason on 16-11-30.
  */
 export class Wall{
     private sprite:PIXI.Sprite;
-    points:{x:number,y:number}[];
+    points:PIXI.Point[];
     constructor(x:number,y:number,width:number,height:number){
         let graphics : PIXI.Graphics = new PIXI.Graphics();
         graphics.beginFill(0x000000);
@@ -17,13 +18,13 @@ export class Wall{
         this.sprite.position.y=y;
 
         this.points = [];
-        this.points.push({x:x,y:y});
-        this.points.push({x:x+width,y:y});
-        this.points.push({x:x+width,y:y+height});
-        this.points.push({x:x,y:y+height});
+        this.points.push(new PIXI.Point(x,y));
+        this.points.push(new PIXI.Point(x+width,y));
+        this.points.push(new PIXI.Point(x+width,y+height));
+        this.points.push(new PIXI.Point(x,y+height));
     }
 
-    intersect(ray:Ray):{x:number,y:number,dist:number}{
+    intersect(ray:Ray):{point:PIXI.Point,dist:number}{
         let vecs = [],result=[];
         for(let point of this.points){
             vecs.push({x:point.x-ray.start.x,y:point.y-ray.start.y});
@@ -34,6 +35,7 @@ export class Wall{
             let next = i==vecs.length-1?0:i+1;
 
             if((dirtan-Math.atan2(vecs[i].y,vecs[i].x))==0){
+                flag = true;
                 result.push(this.points[i]);
             }else if((dirtan-Math.atan2(vecs[i].y,vecs[i].x))*(dirtan-Math.atan2(vecs[next].y,vecs[next].x))<0){
                 flag = true;
@@ -48,8 +50,9 @@ export class Wall{
             rect.y = this.sprite.y;
             for(let i=0;i<result.length;i++){
                 let k = ray.dir.x!==0?(result[i].x-ray.start.x)/ray.dir.x:(result[i].y-ray.start.y)/ray.dir.y;
-                if(closest>k){
-                    closePoint = result[i];
+                if(closest>k&&k>0){
+                    if(!closePoint) closePoint = {};
+                    closePoint.point = result[i];
                     closePoint.dist = k;
                     closest = k;
                 }
