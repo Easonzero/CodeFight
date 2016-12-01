@@ -2,6 +2,7 @@
 var ai_action_1 = require("./ai.action");
 var ai_view_1 = require("./ai.view");
 var ai_model_1 = require("./ai.model");
+var element_raytracer_1 = require("../element.raytracer");
 /**
  * Created by eason on 16-9-22.
  */
@@ -39,6 +40,13 @@ var AI = (function () {
             (_a = self[arr[1]])[arr[2]].apply(_a, oEvent.data.argvs);
             var _a;
         };
+    };
+    AI.prototype.emitRay = function (aim) {
+        return new element_raytracer_1.Ray({ x: this.model.sprite.x, y: this.model.sprite.y }, { x: aim.x - this.model.sprite.x, y: aim.y - this.model.sprite.y });
+    };
+    AI.prototype.backup = function () {
+        this.model.sprite.position.x = this.model.history.x;
+        this.model.sprite.position.y = this.model.history.y;
     };
     AI.prototype.toModel = function () {
         return this.model.sprite;

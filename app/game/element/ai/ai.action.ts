@@ -11,6 +11,8 @@ export class Action {
 
     ahead(){
         let sprite = this.model.sprite;
+        this.model.history.x = sprite.position.x;
+        this.model.history.y = sprite.position.y;
         sprite.position.x+=Math.cos(sprite.rotation);
         sprite.position.y+=Math.sin(sprite.rotation);
     }

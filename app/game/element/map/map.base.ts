@@ -4,13 +4,13 @@ import {Wall} from "./map.wall";
  */
 export class BaseMap{
     private container:PIXI.Container;
-    private walls:Wall[];
+    public walls:Wall[];
     constructor(width:number,height:number){
         this.container = new PIXI.Container();
         this.walls = [];
 
         let graphics : PIXI.Graphics = new PIXI.Graphics();
-        graphics.beginFill(0xffffff);
+        graphics.beginFill(0x000000);
         graphics.drawRect(0,0,width,height);
         this.container.addChild(graphics);
 

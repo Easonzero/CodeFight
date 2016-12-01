@@ -8,7 +8,7 @@ var BaseMap = (function () {
         this.container = new PIXI.Container();
         this.walls = [];
         var graphics = new PIXI.Graphics();
-        graphics.beginFill(0xffffff);
+        graphics.beginFill(0x000000);
         graphics.drawRect(0, 0, width, height);
         this.container.addChild(graphics);
         for (var i = 0; i < 5; i++) {

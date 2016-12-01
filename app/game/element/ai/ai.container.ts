@@ -1,6 +1,7 @@
 import {Action} from "./ai.action";
 import {View} from "./ai.view";
 import {Model} from "./ai.model";
+import {Ray} from "../element.raytracer";
 /**
  * Created by eason on 16-9-22.
  */
@@ -36,6 +37,18 @@ export class AI{
             if(arr[2].startsWith('__')) return;//私有方法禁止访问
             self[arr[1]][arr[2]](...oEvent.data.argvs);
         }
+    }
+
+    emitRay(aim:{x:number,y:number}):Ray{
+        return new Ray(
+            {x:this.model.sprite.x,y:this.model.sprite.y},
+            {x:aim.x-this.model.sprite.x,y:aim.y-this.model.sprite.y}
+            );
+    }
+
+    backup(){
+        this.model.sprite.position.x = this.model.history.x;
+        this.model.sprite.position.y = this.model.history.y;
     }
 
     toModel():PIXI.Sprite {

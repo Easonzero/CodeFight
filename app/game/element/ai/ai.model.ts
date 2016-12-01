@@ -3,6 +3,7 @@
  */
 
 export class Model {
+    history:any = {};
     sprite:PIXI.Sprite;
     life:number=100;//生命值
 }

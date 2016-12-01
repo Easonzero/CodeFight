@@ -6,19 +6,29 @@ import {EventService,EventCode} from "../../../event/index";
 import {AI} from "../ai/index";
 import {Config} from "../../define/index";
 import {BaseMap} from "../map/index";
+import {RayTracer} from "../element.raytracer";
 
 export class GamingStage extends Stage{
     ais : AI[];//ai数组
     map : BaseMap;
+    rayTracing : RayTracer;
     onCreate(eventService:EventService) {
         this.ais = [];
         this.map = new BaseMap(Config.WIDTH,Config.HEIGHT);
+        this.rayTracing = new RayTracer();
         this.stage.addChild(this.map.toModel());
+        this.stage.addChild(this.rayTracing.toModel());
     }
 
     onLooper(){
         for(let ai of this.ais){
             ai.lifeCycle('LOOP');
+            this.rayTracing.clear();
+            for(let wall of this.map.walls){
+                for(let point of wall.points){
+                    this.rayTracing.trace(ai.emitRay(point),this.map);
+                }
+            }
         }
     }
 
@@ -33,6 +43,7 @@ export class GamingStage extends Stage{
             console.log('on start');},
             onLooper:function(){
             this.ahead();
+            this.rotation(0.001);
             this.life=1000;
             }})`);
 

@@ -10,7 +10,7 @@ var View = (function () {
         this.model.sprite.y += this.model.sprite.height / 2;
         this.model.sprite.anchor.x = .5;
         this.model.sprite.anchor.y = .5;
-        this.model.sprite.rotation = Math.PI / 4;
+        this.model.sprite.rotation = Math.PI / 3;
     }
     //模型绘制方法
     View.prototype.__draw = function () {
