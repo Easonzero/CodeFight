@@ -41,8 +41,15 @@ export class RayTracer{
             return isect.point.x-ray.start.x==ray.dir.x&&
                 isect.point.y-ray.start.y==ray.dir.y;
         }
-
         return false;
+    }
+
+    drawLight(center:PIXI.Point){
+        this.points.sort((a,b)=>{
+            return Math.atan2(a.y-center.y,a.x-center.x)-Math.atan2(b.y-center.y,b.x-center.x);
+        })
+
+        this.graphics.drawPolygon(this.points);
     }
 
     clear(){

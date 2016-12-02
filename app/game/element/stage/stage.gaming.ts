@@ -36,6 +36,7 @@ export class GamingStage extends Stage{
                     }
                 }
             }
+            this.rayTracing.drawLight(ai.toModel().position);
         }
     }
 
