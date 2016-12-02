@@ -10,6 +10,7 @@ class State {
     set afterOnSwitch(value: any) {
         this._afterOnSwitch = value;
     }
+
     get beforeOnSwitch(): any {
         return this._beforeOnSwitch;
     }
@@ -17,13 +18,12 @@ class State {
     set beforeOnSwitch(value: any) {
         this._beforeOnSwitch = value;
     }
-
-    get name(): any {
-        return this._name;
+    get stateObj(): any {
+        return this._stateObj;
     }
 
-    set name(value: any) {
-        this._name = value;
+    set stateObj(value: any) {
+        this._stateObj = value;
     }
     get beforeSwitch(): any {
         return this._beforeSwitch;
@@ -40,15 +40,15 @@ class State {
         this._afterSwitch = value;
     }
 
-    private _name: any;
-    private _beforeSwitch: any;  // 该状态被切换到其他状态前执行的一个函数
-    private _afterSwitch: any;  // 该状态被切换到其他状态后执行的一个函数
-    private _beforeOnSwitch: any;  // 切换到该状态前执行的一个函数
-    private _afterOnSwitch: any; // 切换到该状态后执行的一个函数
+    private _stateObj: any;
+    private _beforeSwitch: any;
+    private _afterSwitch: any;
+    private _beforeOnSwitch: any;
+    private _afterOnSwitch: any;
 
     constructor(stateName:any, beforeSwitchFunc: any = null, afterSwitchFunc: any = null,
                 beforeOnSwitchFunc: any = null, afterOnSwitchFunc: any = null) {
-        this._name = stateName;
+        this._stateObj = stateName;
         this._beforeSwitch = beforeSwitchFunc;
         this._afterSwitch = afterSwitchFunc;
         this._beforeOnSwitch = beforeOnSwitchFunc;
@@ -56,57 +56,97 @@ class State {
     }
 }
 
+class ObjListManager {
+    objList: any[];
+    objEqualFunc: any;  // 判断两个obj相等的函数
+
+    constructor(newEqualFunc: any = null) {
+        this.objEqualFunc = newEqualFunc;
+        this.objList = [];
+    }
+
+    add(newObj: any) : number {
+        if (this.ifExists(newObj)) {
+            return -1;
+        } else {
+            this.objList.push(newObj);
+            return this.objList.length - 1;
+        }
+    }
+
+    get(objIndex: number) : any {
+        if (objIndex < this.objList.length) {
+            return this.objList[objIndex];
+        } else {
+            return null;
+        }
+    }
+
+    remove(objToRemove: any) {
+        let tmpindex = this.getIndex(objToRemove);
+
+        if (tmpindex !== -1) {
+            this.objList.splice(tmpindex, 1);
+        }
+    }
+
+    ifExists(objToFind: any) : boolean {
+        return this.getIndex(objToFind) !== -1;
+    }
+
+    getIndex(objToFind: any) {
+        if (typeof(this.objEqualFunc) === 'function') {
+            return this.objList.findIndex((x) => this.objEqualFunc(x) == this.objEqualFunc(objToFind));
+        } else {
+            return this.objList.findIndex((x: any) => x == objToFind);
+        }
+    }
+}
+
 export class Statemachine {
 
     private _currState: number;
 
-    private stateList: State[];
-    private switchTable: { [stateIndex: number] : { [msg: string] : number } };
+    private stateManager: ObjListManager;
+    private msgManager: ObjListManager;
+    private switchTable: { [stateIndex: number] : { [msgIndex: number] : number } };
 
     constructor() {
-        this.stateList = [];
+        this.stateManager = new ObjListManager((x: State) => x.stateObj);
+        this.msgManager = new ObjListManager();
         this.switchTable = {};
     }
 
-    private _addState(stateName: any, beforeSwitchFunc: any = null, afterSwitchFunc: any = null) : number {
-        if (this.ifStateExists(stateName)) {
-            return -1;
-        }
-
-        this.stateList.push(new State(stateName, beforeSwitchFunc, afterSwitchFunc));
-        let tmp = this.stateList.length - 1;
-        this.switchTable[tmp] = {};
-        return tmp;
-    }
-
-    private getStateIndex(stateName: any) : number {
-        return this.stateList.findIndex((x: State) => x.name === stateName);
-    }
-
     currState(): any {
-        return this.stateList[this._currState].name;
+        return this.stateManager.get(this._currState).stateObj;
     }
 
-    setState(stateName: any){
-        let tmpIndex = this.getStateIndex(stateName);
+    setState(stateObj: any){
+        let tmpStateObj = new State(stateObj);
+        let tmpIndex = this.stateManager.getIndex(tmpStateObj);
 
         if(tmpIndex === -1) {
-            this._currState = this._addState(stateName);
+            this._currState = this.stateManager.add(tmpStateObj);
         } else {
             this._currState = tmpIndex;
         }
     }
 
-    addState(stateName: any, beforeSwitchFunc: any = null, afterSwitchFunc: any = null) : boolean {
-        return this._addState(stateName, beforeSwitchFunc, afterSwitchFunc) != -1;
+    addState(stateObj: any, beforeSwitchFunc: any = null, afterSwitchFunc: any = null,
+             beforeOnSwitchFunc: any = null, afterOnSwitchFunc: any = null) {
+        let tmpStateObj = new State(stateObj, beforeSwitchFunc, afterSwitchFunc, beforeOnSwitchFunc, afterOnSwitchFunc);
+
+        let tmpIndex = this.stateManager.add(tmpStateObj);
+        this.switchTable[tmpIndex] = {};
     }
 
-    removeState(stateName: any) : boolean {
-        let tmpIndex = this.getStateIndex(stateName);
+    removeState(stateObj: any) : boolean {
+        let tmpStateObj = new State(stateObj);
+        let tmpIndex = this.stateManager.getIndex(tmpStateObj);
         if (tmpIndex === -1) {
             return false;
         } else {
-            this.stateList.splice(tmpIndex, 1);
+            this.stateManager.remove(tmpStateObj);
             delete this.switchTable[tmpIndex];  // 清除这个状态的转换表
 
             for (let startKey in this.switchTable) {  // 清除其他状态转换到将要删除状态的转换表项
@@ -122,61 +162,78 @@ export class Statemachine {
         }
     }
 
-    ifStateExists(stateName: any) : boolean {
-        return this.getStateIndex(stateName) !== -1;
-    }
-
-    setBeforeFunc(stateName: any, beforeSwitchFunc: any) {
-        let tmpIndex = this.getStateIndex(stateName);
+    setBeforeFunc(stateObj: any, beforeSwitchFunc: any) {
+        let tmpStateObj = new State(stateObj);
+        let tmpIndex = this.stateManager.getIndex(tmpStateObj);
         if (tmpIndex != -1) {
-            this.stateList[tmpIndex].beforeSwitch = beforeSwitchFunc;
+            this.stateManager.get(tmpIndex).beforeSwitch = beforeSwitchFunc;
         }
     }
 
-    setAfterFunc(stateName: any, afterSwitchFunc: any) {
-        let tmpIndex = this.getStateIndex(stateName);
+    setAfterFunc(stateObj: any, afterSwitchFunc: any) {
+        let tmpStateObj = new State(stateObj);
+        let tmpIndex = this.stateManager.getIndex(tmpStateObj);
         if (tmpIndex != -1) {
-            this.stateList[tmpIndex].afterSwitch = afterSwitchFunc;
+            this.stateManager.get(tmpIndex).afterSwitch = afterSwitchFunc;
         }
     }
 
-    setBeforeOnFunc(stateName: any, beforeOnSwitchFunc: any) {
-        let tmpIndex = this.getStateIndex(stateName);
+    setBeforeOnFunc(stateObj: any, beforeOnSwitchFunc: any) {
+        let tmpStateObj = new State(stateObj);
+        let tmpIndex = this.stateManager.getIndex(tmpStateObj);
         if (tmpIndex != -1) {
-            this.stateList[tmpIndex].beforeOnSwitch = beforeOnSwitchFunc;
+            this.stateManager.get(tmpIndex).beforeOnSwitch = beforeOnSwitchFunc;
         }
     }
 
-    setAfterOnFunc(stateName: any, afterOnSwitchFunc: any) {
-        let tmpIndex = this.getStateIndex(stateName);
+    setAfterOnFunc(stateObj: any, afterOnSwitchFunc: any) {
+        let tmpStateObj = new State(stateObj);
+        let tmpIndex = this.stateManager.getIndex(tmpStateObj);
         if (tmpIndex != -1) {
-            this.stateList[tmpIndex].afterOnSwitch = afterOnSwitchFunc;
+            this.stateManager.get(tmpIndex).afterOnSwitch = afterOnSwitchFunc;
         }
     }
 
-    addSwitch(fromStateName: any, toStateName: any, msg: string) {
-        if (!this.ifStateExists(fromStateName)) {
-            this.addState(fromStateName);
+    addSwitch(fromStateObj: any, toStateObj: any, msg: any) {
+        let tmpFromObj = new State(fromStateObj);
+        let tmpToObj = new State(toStateObj);
+        if (!this.stateManager.ifExists(tmpFromObj)) {
+            this.addState(fromStateObj);
         }
 
-        if (!this.ifStateExists(toStateName)) {
-            this.addState(toStateName);
+        if (!this.stateManager.ifExists(tmpToObj)) {
+            this.addState(toStateObj);
         }
 
-        let fromStateIndex = this.getStateIndex(fromStateName);
-        let toStateIndex = this.getStateIndex(toStateName);
+        let fromStateIndex = this.stateManager.getIndex(tmpFromObj);
+        let toStateIndex = this.stateManager.getIndex(tmpToObj);
 
-        this.switchTable[fromStateIndex][msg] = toStateIndex;
+        let msgIndex = this.msgManager.getIndex(msg);
+        if (msgIndex === -1) {
+            msgIndex = this.msgManager.add(msg);
+        }
+
+        this.switchTable[fromStateIndex][msgIndex] = toStateIndex;
     }
 
     removeSwitchByMsg(fromStateName: any, msg: string) {
-        let fromStateIndex = this.getStateIndex(fromStateName);
-        delete this.switchTable[fromStateIndex][msg];
+        let fromState = new State(fromStateName);
+
+        let fromStateIndex = this.stateManager.getIndex(fromState);
+
+        let msgIndex = this.msgManager.getIndex(msg);
+        if (msgIndex === -1) {
+            msgIndex = this.msgManager.add(msg);
+        }
+        delete this.switchTable[fromStateIndex][msgIndex];
     }
 
     removeSwitchByState(fromStateName: any, toStateName: string) {
-        let fromStateIndex = this.getStateIndex(fromStateName);
-        let toStateIndex = this.getStateIndex(toStateName);
+        let fromState = new State(fromStateName);
+        let toState = new State(toStateName);
+
+        let fromStateIndex = this.stateManager.getIndex(fromState);
+        let toStateIndex = this.stateManager.getIndex(toState);
 
         if (fromStateIndex === -1 || toStateIndex === -1) {
             return;
@@ -190,39 +247,52 @@ export class Statemachine {
     }
 
     removeSwitch(fromStateName: any, msg: string, toStateName: any) {
-        let fromStateIndex = this.getStateIndex(fromStateName);
-        let toStateIndex = this.getStateIndex(toStateName);
+        let fromState = new State(fromStateName);
+        let toState = new State(toStateName);
+
+        let fromStateIndex = this.stateManager.getIndex(fromState);
+        let toStateIndex = this.stateManager.getIndex(toState);
 
         if (fromStateIndex === -1 || toStateIndex === -1) {
             return;
         }
 
-        if (msg in this.switchTable[fromStateIndex] &&
-            this.switchTable[fromStateIndex][msg] === toStateIndex) {
-            delete this.switchTable[fromStateIndex][msg];
+        let msgIndex = this.msgManager.getIndex(msg);
+        if (msgIndex === -1) {
+            msgIndex = this.msgManager.add(msg);
+        }
+
+        if (msgIndex in this.switchTable[fromStateIndex] &&
+            this.switchTable[fromStateIndex][msgIndex] === toStateIndex) {
+            delete this.switchTable[fromStateIndex][msgIndex];
         }
     }
 
-    switchState(msg: string) : boolean {
-        if (this.switchTable[this._currState].hasOwnProperty(msg)) {
-            if (typeof(this.stateList[this._currState].beforeSwitch) === 'function') {
-                this.stateList[this._currState].beforeSwitch(arguments);
+    switchState(msg: any) : boolean {
+        let msgIndex = this.msgManager.getIndex(msg);
+        if (msgIndex === -1) {
+            msgIndex = this.msgManager.add(msg);
+        }
+
+        if (this.switchTable[this._currState].hasOwnProperty(msgIndex)) {
+            if (typeof(this.stateManager.get(this._currState).beforeSwitch) === 'function') {
+                this.stateManager.get(this._currState).beforeSwitch(arguments);
             }
 
-            let nextState = this.switchTable[this._currState][msg];
+            let nextState = this.switchTable[this._currState][msgIndex];
 
-            if (typeof(this.stateList[this._currState].afterSwitch) === 'function') {
-                this.stateList[this._currState].afterSwitch(arguments);
+            if (typeof(this.stateManager.get(this._currState).afterSwitch) === 'function') {
+                this.stateManager.get(this._currState).afterSwitch(arguments);
             }
 
-            if (typeof(this.stateList[nextState].beforeOnSwitch) === 'function') {
-                this.stateList[nextState].beforeOnSwitch(arguments);
+            if (typeof(this.stateManager.get(nextState).beforeOnSwitch) === 'function') {
+                this.stateManager.get(nextState).beforeOnSwitch(arguments);
             }
 
             this._currState = nextState;
 
-            if (typeof(this.stateList[this._currState].afterOnSwitch) === 'function') {
-                this.stateList[this._currState].afterOnSwitch(arguments);
+            if (typeof(this.stateManager.get(this._currState).afterOnSwitch) === 'function') {
+                this.stateManager.get(this._currState).afterOnSwitch(arguments);
             }
 
             return true;
