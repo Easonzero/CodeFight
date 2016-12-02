@@ -50,7 +50,7 @@ export class GamingStage extends Stage{
             console.log('on start');},
             onLooper:function(){
             this.ahead();
-            this.rotation(0.001);
+            this.rotation(0.01);
             this.life=1000;
             }})`);
         this.stage.addChild(ai.toModel());
