@@ -8,9 +8,12 @@ import {GamingStage} from "./stage.gaming";
 import {PauseStage} from "./stage.pause";
 import {EndStage} from "./stage.end";
 import {EventService,EventCode} from "../../../event/index";
+import {Statemachine} from '../statemachine/statemachine'
+import {startTimeRange} from "@angular/core/src/profile/wtf_impl";
 
 export class StageContainer {
     private state : State = State.PREPARE;//当前场景状态
+    private sttme : Statemachine = new Statemachine();
     private stages : Stage[] = [
         new PrepareStage(),new GamingStage(),new PauseStage(),new EndStage()
     ];
@@ -44,5 +47,20 @@ export class StageContainer {
 
     getCurrentModel() : any{
         return this.stages[this.state].toModel();
+    }
+
+
+
+    initializeSttme() {
+        //如何遍历一个 enum ?
+        this.sttme.addState(State.PREPARE);
+        this.sttme.addState(State.GAMING);
+        this.sttme.addState(State.PAUSE);
+        this.sttme.addState(State.END);
+
+    }
+
+    switchState(msg: string) {
+        this.sttme.switchState(msg);
     }
 }

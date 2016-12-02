@@ -7,9 +7,11 @@ var stage_prepare_1 = require("./stage.prepare");
 var stage_gaming_1 = require("./stage.gaming");
 var stage_pause_1 = require("./stage.pause");
 var stage_end_1 = require("./stage.end");
+var statemachine_1 = require('../statemachine/statemachine');
 var StageContainer = (function () {
     function StageContainer(eventService) {
         this.state = index_1.State.PREPARE; //当前场景状态
+        this.sttme = new statemachine_1.Statemachine();
         this.stages = [
             new stage_prepare_1.PrepareStage(), new stage_gaming_1.GamingStage(), new stage_pause_1.PauseStage(), new stage_end_1.EndStage()
         ];
@@ -41,6 +43,16 @@ var StageContainer = (function () {
     };
     StageContainer.prototype.getCurrentModel = function () {
         return this.stages[this.state].toModel();
+    };
+    StageContainer.prototype.initializeSttme = function () {
+        //如何遍历一个 enum ?
+        this.sttme.addState(index_1.State.PREPARE);
+        this.sttme.addState(index_1.State.GAMING);
+        this.sttme.addState(index_1.State.PAUSE);
+        this.sttme.addState(index_1.State.END);
+    };
+    StageContainer.prototype.switchState = function (msg) {
+        this.sttme.switchState(msg);
     };
     return StageContainer;
 }());
