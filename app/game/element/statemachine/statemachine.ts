@@ -63,6 +63,8 @@ export class Statemachine {
     private stateList: State[];
     private switchTable: { [stateIndex: number] : { [msg: string] : number } };
 
+
+
     constructor() {
         this.stateList = [];
         this.switchTable = {};
