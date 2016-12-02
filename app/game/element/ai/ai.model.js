@@ -6,6 +6,7 @@ var Model = (function () {
     function Model() {
         this.history = {};
         this.life = 100; //生命值
+        this.dir = new PIXI.Point(1, 0);
     }
     return Model;
 }());

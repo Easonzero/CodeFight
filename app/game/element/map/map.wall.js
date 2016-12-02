@@ -24,15 +24,14 @@ var Wall = (function () {
             var point = _a[_i];
             vecs.push({ x: point.x - ray.start.x, y: point.y - ray.start.y });
         }
-        var dirtan = Math.atan2(ray.dir.y, ray.dir.x);
         var flag = false;
         for (var i = 0; i < vecs.length; i++) {
             var next = i == vecs.length - 1 ? 0 : i + 1;
-            if ((dirtan - Math.atan2(vecs[i].y, vecs[i].x)) == 0) {
+            if (utils_math_1.MathUtils.multi(ray.dir, vecs[i]) == 0) {
                 flag = true;
                 result.push(this.points[i]);
             }
-            else if ((dirtan - Math.atan2(vecs[i].y, vecs[i].x)) * (dirtan - Math.atan2(vecs[next].y, vecs[next].x)) < 0) {
+            else if (utils_math_1.MathUtils.multi(ray.dir, vecs[i]) * utils_math_1.MathUtils.multi(ray.dir, vecs[next]) < 0) {
                 flag = true;
                 result.push(utils_math_1.MathUtils.computeIntersection(this.points[i], this.points[next], ray.start, ray.dir));
             }

@@ -19,6 +19,12 @@ var MathUtils = (function () {
     MathUtils.rotation = function (vec, deg) {
         return new PIXI.Point(vec.x * Math.cos(deg) - vec.y * Math.sin(deg), vec.y * Math.cos(deg) + vec.x * Math.sin(deg));
     };
+    MathUtils.dot = function (vec1, vec2) {
+        return vec1.x * vec2.x + vec1.y * vec2.y;
+    };
+    MathUtils.multi = function (vec1, vec2) {
+        return vec1.x * vec2.y - vec1.y * vec2.x;
+    };
     return MathUtils;
 }());
 exports.MathUtils = MathUtils;

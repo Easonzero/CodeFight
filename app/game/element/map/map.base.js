@@ -11,7 +11,7 @@ var BaseMap = (function () {
         this.container.addChild(wall.toModel());
         this.walls.push(wall);
         for (var i = 0; i < 5; i++) {
-            var wall_1 = new map_wall_1.Wall(i * width / 5, Math.random() * (height - 100), 100, 100);
+            var wall_1 = new map_wall_1.Wall(10 + i * width / 5, Math.random() * (height - 110), 100, 100);
             this.container.addChild(wall_1.toModel());
             this.walls.push(wall_1);
         }

@@ -29,15 +29,14 @@ export class Wall{
         for(let point of this.points){
             vecs.push({x:point.x-ray.start.x,y:point.y-ray.start.y});
         }
-        let dirtan = Math.atan2(ray.dir.y,ray.dir.x);
         let flag = false;
         for(let i=0;i<vecs.length;i++){
             let next = i==vecs.length-1?0:i+1;
 
-            if((dirtan-Math.atan2(vecs[i].y,vecs[i].x))==0){
+            if(MathUtils.multi(ray.dir,vecs[i])==0){
                 flag = true;
                 result.push(this.points[i]);
-            }else if((dirtan-Math.atan2(vecs[i].y,vecs[i].x))*(dirtan-Math.atan2(vecs[next].y,vecs[next].x))<0){
+            }else if(MathUtils.multi(ray.dir,vecs[i])*MathUtils.multi(ray.dir,vecs[next])<0){
                 flag = true;
                 result.push(MathUtils.computeIntersection(this.points[i],this.points[next],ray.start,ray.dir));
             }

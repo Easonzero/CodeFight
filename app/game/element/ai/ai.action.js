@@ -1,4 +1,5 @@
 "use strict";
+var utils_math_1 = require("../../../utils/utils.math");
 /**
  * Created by eason on 16-9-22.
  */
@@ -6,7 +7,8 @@ var Action = (function () {
     function Action(model, view) {
         this.model = model;
         this.view = view;
-        this.model.sprite.position.y = 100;
+        this.model.sprite.position.y = 250;
+        this.model.sprite.position.x = 400;
     }
     Action.prototype.ahead = function () {
         var sprite = this.model.sprite;
@@ -17,6 +19,7 @@ var Action = (function () {
     };
     Action.prototype.rotation = function (deg) {
         this.model.sprite.rotation += deg;
+        this.model.dir = utils_math_1.MathUtils.rotation(this.model.dir, -deg);
     };
     return Action;
 }());

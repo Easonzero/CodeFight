@@ -14,7 +14,7 @@ export class BaseMap{
         this.walls.push(wall);
 
         for(let i=0;i<5;i++){
-            let wall = new Wall(i*width/5,Math.random()*(height-100),100,100);
+            let wall = new Wall(10+i*width/5,Math.random()*(height-110),100,100);
             this.container.addChild(wall.toModel());
             this.walls.push(wall);
         }

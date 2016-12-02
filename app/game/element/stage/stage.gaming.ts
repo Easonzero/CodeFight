@@ -53,7 +53,6 @@ export class GamingStage extends Stage{
             this.rotation(0.001);
             this.life=1000;
             }})`);
-
         this.stage.addChild(ai.toModel());
         this.ais.push(ai);
         ai.lifeCycle('START');
