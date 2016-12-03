@@ -15,8 +15,6 @@ export class RayTracer{
     constructor(){
         this.graphics = new PIXI.Graphics();
         this.points = [];
-        this.graphics.lineStyle(1,0xffffff);
-        this.graphics.beginFill(0xeeeeee);
     }
 
     private intersections(ray: Ray, map: BaseMap):{point:PIXI.Point,dist:number}{
@@ -35,8 +33,6 @@ export class RayTracer{
     trace(ray:Ray,map:BaseMap):boolean{
         let isect = this.intersections(ray, map);
         if (isect){
-            this.graphics.moveTo(ray.start.x,ray.start.y)
-                .lineTo(isect.point.x,isect.point.y);
             this.points.push(isect.point);
             return isect.point.x-ray.start.x==ray.dir.x&&
                 isect.point.y-ray.start.y==ray.dir.y;
@@ -45,18 +41,31 @@ export class RayTracer{
     }
 
     drawLight(center:PIXI.Point){
+        this.graphics.beginFill(0xeeeeee);
+
         this.points.sort((a,b)=>{
             return Math.atan2(a.y-center.y,a.x-center.x)-Math.atan2(b.y-center.y,b.x-center.x);
-        })
+        });
 
         this.graphics.drawPolygon(this.points);
+
+        this.points.length = 0;
+    }
+
+    drawShadow(center:PIXI.Point){
+        this.graphics.beginFill(0xffffff,0.2);
+
+        this.points.sort((a,b)=>{
+            return Math.atan2(a.y-center.y,a.x-center.x)-Math.atan2(b.y-center.y,b.x-center.x);
+        });
+
+        this.graphics.drawPolygon(this.points);
+
+        this.points.length = 0;
     }
 
     clear(){
         this.graphics.clear();
-        this.graphics.lineStyle(1,0xffffff);
-        this.graphics.beginFill(0xeeeeee);
-        this.points.length = 0;
     }
 
     toModel(){

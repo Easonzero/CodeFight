@@ -39,10 +39,14 @@ export class AI{
         }
     }
 
-    emitRay(direction:PIXI.Point):Ray{
+    emitRay(direction:PIXI.Point,offset:PIXI.Point=new PIXI.Point(0,0)):Ray{
         return new Ray(
-            new PIXI.Point(this.model.sprite.x,this.model.sprite.y), direction
+            new PIXI.Point(this.model.sprite.x+offset.x,this.model.sprite.y+offset.y), direction
         );
+    }
+
+    position(offset:PIXI.Point=new PIXI.Point(0,0)){
+        return new PIXI.Point(this.model.sprite.x+offset.x,this.model.sprite.y+offset.y);
     }
 
     backup(){
