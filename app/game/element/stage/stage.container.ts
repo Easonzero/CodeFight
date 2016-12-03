@@ -8,8 +8,7 @@ import {GamingStage} from "./stage.gaming";
 import {PauseStage} from "./stage.pause";
 import {EndStage} from "./stage.end";
 import {EventService,EventCode} from "../../../event/index";
-import {Statemachine} from '../statemachine/statemachine'
-import {startTimeRange} from "@angular/core/src/profile/wtf_impl";
+import {Statemachine} from '../../../utils/utils.statemachine'
 
 export class StageContainer {
     private state : State = State.PREPARE;//当前场景状态
