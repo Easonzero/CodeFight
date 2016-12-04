@@ -23,6 +23,8 @@
             'rxjs':                       'npm:rxjs',
             'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
             'pixi.js':                       'libs:pixi.min.js',
+            'codemirror':                 'npm:codemirror/lib',
+            'codemirror/javascript':            'npm:codemirror/mode/javascript/javascript.js',
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -35,6 +37,10 @@
             },
             'angular2-in-memory-web-api': {
                 main: './index.ts',
+                defaultExtension: 'js'
+            },
+            'codemirror':{
+                main: './codemirror.js',
                 defaultExtension: 'js'
             }
         }

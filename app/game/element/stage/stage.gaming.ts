@@ -82,17 +82,7 @@ export class GamingStage extends Stage{
     afterSwitch(msg:any) {
         let ai : AI = new AI();
         //测试代码
-        ai.lifeCycle('CREATE',`({onStart:function(){
-            console.log('on start');},
-            onLooper:function(){
-            this.ahead();
-            this.rotation(0.01);
-            this.life=1000;
-            },
-            onHitWall:function(){
-            this.back();
-            this.rotation(0.01);
-            }})`);
+        ai.lifeCycle('CREATE',`(${msg})`);
         this.stage.addChild(ai.toModel());
         this.ais.push(ai);
         ai.lifeCycle('START');
