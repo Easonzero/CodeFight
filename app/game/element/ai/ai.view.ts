@@ -10,7 +10,6 @@ export class View {
         this.model.sprite.y+=this.model.sprite.height/2;
         this.model.sprite.anchor.x = .5;
         this.model.sprite.anchor.y = .5;
-        this.model.sprite.rotation=Math.PI/3;
     }
     //模型绘制方法
     __draw() : PIXI.Texture{

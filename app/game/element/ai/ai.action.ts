@@ -13,14 +13,26 @@ export class Action {
 
     ahead(){
         let sprite = this.model.sprite;
+
         this.model.history.x = sprite.position.x;
         this.model.history.y = sprite.position.y;
+
         sprite.position.x+=Math.cos(sprite.rotation);
         sprite.position.y+=Math.sin(sprite.rotation);
     }
 
     rotation(deg){
+        this.model.history.rotation = this.model.sprite.rotation;
         this.model.sprite.rotation+=deg;
-        this.model.dir = MathUtils.rotation(this.model.dir,-deg);
+    }
+
+    back(){
+        let sprite = this.model.sprite;
+
+        this.model.history.x = sprite.position.x;
+        this.model.history.y = sprite.position.y;
+
+        sprite.position.x+=Math.cos(sprite.rotation+Math.PI);
+        sprite.position.y+=Math.sin(sprite.rotation+Math.PI);
     }
 }

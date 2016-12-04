@@ -4,7 +4,8 @@
 //ai的api列表		
 let mAI = {
     ahead: function () { postMessage({ "fn": "/action/ahead", "argvs": [] }); },
-    rotation: function (deg) { postMessage({ "fn": "/action/rotation", "argvs": [deg] }); }
+    rotation: function (deg) { postMessage({ "fn": "/action/rotation", "argvs": [deg] }); },
+    back: function () { postMessage({ "fn": "/action/back", "argvs": [] }); }
 };
 onmessage = function (oEvent) {
     let event = oEvent.data.e;
@@ -15,7 +16,7 @@ onmessage = function (oEvent) {
             let o = eval(argvs[0]);
             mAI.onStart = o.onStart || function () { };
             mAI.onLooper = o.onLooper || function () { };
-            mAI.onHit = o.onHit || function () { };
+            mAI.onHitWall = o.onHitWall || function () { };
             mAI.onScan = o.onScan || function () { };
             break;
         case 'START':
@@ -25,6 +26,10 @@ onmessage = function (oEvent) {
         case 'LOOP':
             mAI.life = ai.life;
             mAI.onLooper();
+            break;
+        case 'HITWALL':
+            mAI.life = ai.life;
+            mAI.onHitWall();
             break;
     }
 };

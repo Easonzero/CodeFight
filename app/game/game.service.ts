@@ -12,7 +12,7 @@ export class GameService {
     private container : StageContainer;//pixi数据容器
     constructor(eventService:EventService){
         this.container = new StageContainer(eventService);
-        this.renderer = PIXI.autoDetectRenderer(Config.WIDTH, Config.HEIGHT);
+        this.renderer = PIXI.autoDetectRenderer(Config.WIDTH, Config.HEIGHT,{ antialias: true });
         eventService.subscribe(EventCode.EDIT_CODE_CONTENT,(code)=>{
             this.container.switch(State.GAMING,code);
         });

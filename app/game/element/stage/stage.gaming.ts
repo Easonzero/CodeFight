@@ -8,58 +8,68 @@ import {Config} from "../../define/index";
 import {BaseMap} from "../map/index";
 import {RayTracer} from "../element.raytracer";
 import {MathUtils} from "../../../utils/utils.math";
+import {CollisionInspect} from "../element.collision";
 
 export class GamingStage extends Stage{
     ais : AI[];//ai数组
     map : BaseMap;
     rayTracing : RayTracer;
+    collisionInspect:CollisionInspect;
     debug:boolean = true;
     onCreate(eventService:EventService) {
         this.ais = [];
         this.map = new BaseMap(Config.WIDTH,Config.HEIGHT);
         this.rayTracing = new RayTracer();
+        this.collisionInspect = new CollisionInspect();
         this.stage.addChild(this.map.toModel());
         this.stage.addChild(this.rayTracing.toModel());
     }
 
     onLooper(){
         for(let ai of this.ais){
-            ai.lifeCycle('LOOP');
-            this.rayTracing.clear();
+            if(this.collisionInspect.inspect(ai.rect,this.map)){
+                ai.backup();
+                ai.lifeCycle('HITWALL');
+                ai.setState('isHitWall',true);
+            }else ai.setState('isHitWall',false);
 
-            for(let i=0;i<10;i++){
-                let offset = MathUtils.rotation(new PIXI.Point(10,0),i*Math.PI*2/10);
-                if(this.debug){
-                    console.log(offset);
+            if(!ai.getState('isHitWall')){
+                ai.lifeCycle('LOOP');
+
+                this.rayTracing.clear();
+
+                for(let i=0;i<10;i++){
+                    let offset = MathUtils.rotation(new PIXI.Point(10,0),i*Math.PI*2/10);
+                    let pos = ai.position(offset);
+
+                    for(let wall of this.map.walls){
+                        for(let point of wall.points){
+                            let dir = new PIXI.Point(point.x-pos.x,point.y-pos.y);
+                            let isvec = this.rayTracing.trace(ai.emitRay(dir,offset),this.map);
+
+                            if(isvec){
+                                this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,0.001),offset),this.map);
+                                this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,-0.001),offset),this.map);
+                            }
+                        }
+                    }
+
+                    this.rayTracing.drawShadow(pos);
                 }
-                let pos = ai.position(offset);
+
                 for(let wall of this.map.walls){
                     for(let point of wall.points){
-                        let dir = new PIXI.Point(point.x-pos.x,point.y-pos.y);
-                        let isvec = this.rayTracing.trace(ai.emitRay(dir,offset),this.map);
+                        let dir = new PIXI.Point(point.x-ai.toModel().position.x,point.y-ai.toModel().position.y);
+                        let isvec = this.rayTracing.trace(ai.emitRay(dir),this.map);
 
                         if(isvec){
-                            this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,0.001),offset),this.map);
-                            this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,-0.001),offset),this.map);
+                            this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,0.001)),this.map);
+                            this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,-0.001)),this.map);
                         }
                     }
                 }
-
-                this.rayTracing.drawShadow(pos);
+                this.rayTracing.drawLight(ai.toModel().position);
             }
-
-            for(let wall of this.map.walls){
-                for(let point of wall.points){
-                    let dir = new PIXI.Point(point.x-ai.toModel().position.x,point.y-ai.toModel().position.y);
-                    let isvec = this.rayTracing.trace(ai.emitRay(dir),this.map);
-
-                    if(isvec){
-                        this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,0.001)),this.map);
-                        this.rayTracing.trace(ai.emitRay(MathUtils.rotation(dir,-0.001)),this.map);
-                    }
-                }
-            }
-            this.rayTracing.drawLight(ai.toModel().position);
 
             this.debug = false;
         }
@@ -78,6 +88,10 @@ export class GamingStage extends Stage{
             this.ahead();
             this.rotation(0.01);
             this.life=1000;
+            },
+            onHitWall:function(){
+            this.back();
+            this.rotation(0.01);
             }})`);
         this.stage.addChild(ai.toModel());
         this.ais.push(ai);

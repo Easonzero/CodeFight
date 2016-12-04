@@ -2,6 +2,7 @@ import {Action} from "./ai.action";
 import {View} from "./ai.view";
 import {Model} from "./ai.model";
 import {Ray} from "../element.raytracer";
+import {MathUtils} from "../../../utils/utils.math";
 /**
  * Created by eason on 16-9-22.
  */
@@ -11,6 +12,7 @@ export class AI{
     private model : Model;//ai在pixi中的数据结构
     private view : View;//涉及ai绘制的api
     private worker : Worker;//ai用户线程
+
     constructor(){
         this.model = new Model();
         this.view = new View(this.model);
@@ -49,9 +51,22 @@ export class AI{
         return new PIXI.Point(this.model.sprite.x+offset.x,this.model.sprite.y+offset.y);
     }
 
+    get rect():PIXI.Rectangle{
+        let rect = this.model.sprite.getBounds();
+        return rect;
+    }
+
     backup(){
         this.model.sprite.position.x = this.model.history.x;
         this.model.sprite.position.y = this.model.history.y;
+    }
+
+    setState(key:string,value){
+        this.model.state[key] = value;
+    }
+
+    getState(key:string){
+        return this.model.state[key];
     }
 
     toModel():PIXI.Sprite {

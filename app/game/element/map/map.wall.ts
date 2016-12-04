@@ -62,6 +62,10 @@ export class Wall{
         }
     }
 
+    get rect():PIXI.Rectangle{
+        return this.sprite.getBounds();
+    }
+
     toModel():PIXI.Sprite{
         return this.sprite;
     }
