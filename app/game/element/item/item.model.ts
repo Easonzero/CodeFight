@@ -3,19 +3,10 @@
  */
 
 export class ItemModel {
-    sprite: PIXI.Graphics;
+    sprite: PIXI.Sprite;
 
-    constructor(x: number, y: number, r: number) {
-
-        let graphics : PIXI.Graphics = new PIXI.Graphics;
-        graphics.beginFill(0xff0000);
-        graphics.drawPolygon([
-            new PIXI.Point(0,0),
-            new PIXI.Point(15,15),
-            new PIXI.Point(0,30)
-        ]);
-
-        this.sprite = graphics;
+    constructor(x: number, y: number, r: number, t: PIXI.Texture) {
+        this.sprite = new PIXI.Sprite(t);
 
         this.sprite.position.x = x;
         this.sprite.position.y = y;

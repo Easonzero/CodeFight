@@ -5,6 +5,22 @@ import {AI} from "../ai/ai.container";
  */
 
 export class Bullet extends Item {
+    static get texture(): PIXI.Texture {
+        if (! this._texture) {
+            let graphics : PIXI.Graphics = new PIXI.Graphics();
+            graphics.beginFill(0xff0000);
+            graphics.drawPolygon([
+                new PIXI.Point(0,0),
+                new PIXI.Point(15,15),
+                new PIXI.Point(0,30)
+            ]);
+
+            this._texture = graphics.generateCanvasTexture(1, 1);
+        }
+
+        return this._texture;
+    }
+
     get damage(): number {
         return this._damage;
     }
@@ -17,8 +33,10 @@ export class Bullet extends Item {
     private v: number; // 速度
     private _damage: number;
 
+    private static _texture: PIXI.Texture;
+
     constructor(x: number, y: number, r: number, owner: AI) {
-        super(x, y, r);
+        super(x, y, r, Bullet.texture);
         this._owner = owner;
 
         this.v = 6;

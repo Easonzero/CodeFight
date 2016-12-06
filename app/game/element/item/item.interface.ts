@@ -6,8 +6,8 @@ import {ItemModel} from "./item.model";
 export class Item {
     protected model: ItemModel;
 
-    constructor(x: number, y: number, r: number) {
-        this.model = new ItemModel(x, y, r);
+    constructor(x: number, y: number, r: number, t: PIXI.Texture) {
+        this.model = new ItemModel(x, y, r, t);
 
     }
 
