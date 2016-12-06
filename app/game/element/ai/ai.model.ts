@@ -1,3 +1,4 @@
+import {GamingStage} from "../stage/stage.gaming";
 /**
  * Created by eason on 16-11-29.
  */
@@ -10,4 +11,12 @@ export class Model {
     state:any = {
         isHitWall : false
     };
+
+    stage: GamingStage;
+    fireInterval: number;
+
+    constructor(stage: GamingStage) {
+        this.stage = stage;
+        this.fireInterval = 500;
+    }
 }

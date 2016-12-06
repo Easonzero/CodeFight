@@ -1,4 +1,5 @@
 import {BaseMap} from "./map/map.base";
+import {AI} from "./ai/ai.container";
 /**
  * Created by eason on 16-12-4.
  */
@@ -36,5 +37,15 @@ export class CollisionInspect {
         }
 
         return false;
+    }
+
+    inspectWithAIs(rect0: PIXI.Rectangle, ais: AI[]) : number {
+        for (let i = 0; i < ais.length; ++i) {
+            if (this.intersections(rect0, ais[i].rect)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

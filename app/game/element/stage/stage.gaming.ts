@@ -9,18 +9,24 @@ import {BaseMap} from "../map/index";
 import {RayTracer} from "../element.raytracer";
 import {MathUtils} from "../../../utils/utils.math";
 import {CollisionInspect} from "../element.collision";
+import {Bullet} from "../item/item.bullet";
 
 export class GamingStage extends Stage{
     ais : AI[];//ai数组
     map : BaseMap;
     rayTracing : RayTracer;
     collisionInspect:CollisionInspect;
+
+    bullets: Bullet[];
+
     debug:boolean = true;
     onCreate(eventService:EventService) {
         this.ais = [];
         this.map = new BaseMap(Config.WIDTH,Config.HEIGHT);
         this.rayTracing = new RayTracer();
         this.collisionInspect = new CollisionInspect();
+
+        this.bullets = [];
 
         PIXI.loader
             .add('spineboy', './app/remote/test.json').load();
@@ -78,6 +84,27 @@ export class GamingStage extends Stage{
 
             this.debug = false;
         }
+
+        // 子弹飞行部分
+        for(let bullet of this.bullets) {
+            if (this.collisionInspect.inspect(bullet.rect(), this.map)) {
+                this.stage.removeChild(bullet.toModel());
+                this.bullets.splice(this.bullets.indexOf(bullet), 1);
+            }
+
+            // 判断是否和 AI 相撞
+            let tmpIndex = this.collisionInspect.inspectWithAIs(bullet.rect(), this.ais);
+
+            // TODO: 撞上了一个 AI
+            if (tmpIndex != -1 && bullet.owner != this.ais[tmpIndex]) {
+
+                this.stage.removeChild(bullet.toModel());
+                this.bullets.splice(this.bullets.indexOf(bullet), 1);
+            } else {
+                bullet.ahead();
+            }
+
+        }
     }
 
     onSwitch(fn:()=>void) {
@@ -85,7 +112,7 @@ export class GamingStage extends Stage{
     }
 
     afterSwitch(msg:any) {
-        let ai : AI = new AI();
+        let ai : AI = new AI(this);
         //测试代码
         ai.lifeCycle('CREATE',`(${msg})`);
         this.stage.addChild(ai.toModel());
@@ -95,5 +122,9 @@ export class GamingStage extends Stage{
 
     onDestory() {
 
+    }
+
+    addChild(child) {
+        this.stage.addChild(child);
     }
 }

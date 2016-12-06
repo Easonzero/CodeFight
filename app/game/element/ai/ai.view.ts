@@ -11,7 +11,7 @@ export class View {
         this.model.spine.position.y+=this.model.spine.height/2;
         this.model.spine.pivot.x = this.model.spine.width/2;
         this.model.spine.pivot.y = this.model.spine.height/2;
-        this.model.spine.state.setAnimationByName(0, 'jump', true);
+        this.model.spine.state.setAnimationByName(0, 'walk', true);
     }
     //模型绘制方法
     __draw() : PIXI.Texture{
