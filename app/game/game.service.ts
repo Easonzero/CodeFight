@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 import {StageContainer} from "./element/stage/index";
 import {EventService,EventCode} from "../event/index";
 import {State,Config} from "./define/index";
+require('pixi.js');
+require('pixi-spine');
 
 @Injectable()
 export class GameService {

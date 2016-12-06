@@ -7,32 +7,32 @@ import {MathUtils} from "../../../utils/utils.math";
 
 export class Action {
     constructor(protected model:Model,protected view:View){
-        this.model.sprite.position.y = 250;
-        this.model.sprite.position.x = 400;
+        this.model.spine.position.y = 250;
+        this.model.spine.position.x = 400;
     }
 
     ahead(){
-        let sprite = this.model.sprite;
+        let spine = this.model.spine;
 
-        this.model.history.x = sprite.position.x;
-        this.model.history.y = sprite.position.y;
+        this.model.history.x = spine.position.x;
+        this.model.history.y = spine.position.y;
 
-        sprite.position.x+=Math.cos(sprite.rotation);
-        sprite.position.y+=Math.sin(sprite.rotation);
+        spine.position.x+=Math.cos(spine.rotation);
+        spine.position.y+=Math.sin(spine.rotation);
     }
 
     rotation(deg){
-        this.model.history.rotation = this.model.sprite.rotation;
-        this.model.sprite.rotation+=deg;
+        this.model.history.rotation = this.model.spine.rotation;
+        this.model.spine.rotation+=deg;
     }
 
     back(){
-        let sprite = this.model.sprite;
+        let spine = this.model.spine;
 
-        this.model.history.x = sprite.position.x;
-        this.model.history.y = sprite.position.y;
+        this.model.history.x = spine.position.x;
+        this.model.history.y = spine.position.y;
 
-        sprite.position.x+=Math.cos(sprite.rotation+Math.PI);
-        sprite.position.y+=Math.sin(sprite.rotation+Math.PI);
+        spine.position.x+=Math.cos(spine.rotation+Math.PI);
+        spine.position.y+=Math.sin(spine.rotation+Math.PI);
     }
 }

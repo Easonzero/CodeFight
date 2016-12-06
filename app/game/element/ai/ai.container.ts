@@ -43,22 +43,22 @@ export class AI{
 
     emitRay(direction:PIXI.Point,offset:PIXI.Point=new PIXI.Point(0,0)):Ray{
         return new Ray(
-            new PIXI.Point(this.model.sprite.x+offset.x,this.model.sprite.y+offset.y), direction
+            new PIXI.Point(this.model.spine.x+offset.x,this.model.spine.y+offset.y), direction
         );
     }
 
     position(offset:PIXI.Point=new PIXI.Point(0,0)){
-        return new PIXI.Point(this.model.sprite.x+offset.x,this.model.sprite.y+offset.y);
+        return new PIXI.Point(this.model.spine.x+offset.x,this.model.spine.y+offset.y);
     }
 
     get rect():PIXI.Rectangle{
-        let rect = this.model.sprite.getBounds();
+        let rect = this.model.spine.getBounds();
         return rect;
     }
 
     backup(){
-        this.model.sprite.position.x = this.model.history.x;
-        this.model.sprite.position.y = this.model.history.y;
+        this.model.spine.position.x = this.model.history.x;
+        this.model.spine.position.y = this.model.history.y;
     }
 
     setState(key:string,value){
@@ -69,7 +69,7 @@ export class AI{
         return this.model.state[key];
     }
 
-    toModel():PIXI.Sprite {
-        return this.model.sprite;
+    toModel():PIXI.spine.Spine {
+        return this.model.spine;
     };
 }

@@ -4,6 +4,5 @@ node_modules
 *.js
 *.js.map
 !systemjs.config.js
-!libs/*.js
 !pixi.js
 !app/remote/*.js

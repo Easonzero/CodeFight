@@ -5,11 +5,13 @@ import {Model} from "./ai.model";
 
 export class View {
     constructor(protected model:Model){
-        this.model.sprite = new PIXI.Sprite(this.__draw());
-        this.model.sprite.x+=this.model.sprite.width/2;
-        this.model.sprite.y+=this.model.sprite.height/2;
-        this.model.sprite.anchor.x = .5;
-        this.model.sprite.anchor.y = .5;
+        this.model.spine = new PIXI.spine.Spine(PIXI.loader.resources['spineboy'].spineData);
+        this.model.spine.scale.set(0.1);
+        this.model.spine.position.x+=this.model.spine.width/2;
+        this.model.spine.position.y+=this.model.spine.height/2;
+        this.model.spine.pivot.x = this.model.spine.width/2;
+        this.model.spine.pivot.y = this.model.spine.height/2;
+        this.model.spine.state.setAnimationByName(0, 'jump', true);
     }
     //模型绘制方法
     __draw() : PIXI.Texture{

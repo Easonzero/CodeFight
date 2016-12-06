@@ -4,7 +4,7 @@
 
 export class Model {
     history:any = {};
-    sprite:PIXI.Sprite;
+    spine:PIXI.spine.Spine;
     life:number=100;//生命值
 
     state:any = {

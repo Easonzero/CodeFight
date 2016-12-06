@@ -1,7 +1,6 @@
 /**
  * Created by eason on 16-9-22.
  */
-import PIXI = require('pixi.js');
 import {EventService,EventCode} from "../../../event/index";
 
 export abstract class Stage {

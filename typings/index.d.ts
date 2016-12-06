@@ -3,3 +3,4 @@
 /// <reference path="globals/jasmine/index.d.ts" />
 /// <reference path="globals/node/index.d.ts" />
 /// <reference path="pixi.js/pixi.js.d.ts" />
+/// <reference path="pixi.js/pixi-spine.d.ts" />
