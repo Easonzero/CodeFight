@@ -17,13 +17,21 @@ export class Action {
         this.model.history.x = spine.position.x;
         this.model.history.y = spine.position.y;
 
-        spine.position.x+=Math.cos(spine.rotation);
-        spine.position.y+=Math.sin(spine.rotation);
+        spine.position.x+=Math.cos(this.model.rotation);
+        spine.position.y+=Math.sin(this.model.rotation);
     }
 
     rotation(deg){
-        this.model.history.rotation = this.model.spine.rotation;
-        this.model.spine.rotation+=deg;
+        this.model.history.rotation = this.model.rotation;
+
+        this.model.rotation+=deg;
+        this.model.spine.r(this.model.rotation);
+        this.model.spine.rweapon(this.model.rotation);
+    }
+
+    rotationWeapon(deg){
+        this.model.weapon_rotation+=deg;
+        this.model.spine.rweapon(this.model.weapon_rotation);
     }
 
     back(){
@@ -32,7 +40,7 @@ export class Action {
         this.model.history.x = spine.position.x;
         this.model.history.y = spine.position.y;
 
-        spine.position.x+=Math.cos(spine.rotation+Math.PI);
-        spine.position.y+=Math.sin(spine.rotation+Math.PI);
+        spine.position.x+=Math.cos(this.model.rotation+Math.PI);
+        spine.position.y+=Math.sin(this.model.rotation+Math.PI);
     }
 }

@@ -64,7 +64,7 @@ export class RayTracer{
         this.points.length = 0;
     }
 
-    text(rect:PIXI.Rectangle){
+    test(rect:PIXI.Rectangle){
         this.graphics.beginFill(0x000000);
         this.graphics.drawRect(rect.x,rect.y,rect.width,rect.height);
     }

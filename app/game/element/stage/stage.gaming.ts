@@ -22,10 +22,6 @@ export class GamingStage extends Stage{
         this.rayTracing = new RayTracer();
         this.collisionInspect = new CollisionInspect();
 
-        PIXI.loader
-            .add('spineboy', './app/remote/test.json').load();
-
-
         this.stage.addChild(this.map.toModel());
         this.stage.addChild(this.rayTracing.toModel());
     }

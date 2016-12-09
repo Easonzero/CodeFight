@@ -41,9 +41,10 @@ export class EditorComponent implements AfterViewInit {
         console.log('on start');
     },
     onLooper:function(){
-        this.ahead();
-        this.rotation(0.01);
         this.life=1000;
+        this.rotation(0.01);
+        this.rotationWeapon(0.01);
+        this.ahead();
     },
     onHitWall:function(){
         this.back();

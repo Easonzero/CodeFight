@@ -5,6 +5,7 @@
 let mAI = {
     ahead: function () { postMessage({ "fn": "/action/ahead", "argvs": [] }); },
     rotation: function (deg) { postMessage({ "fn": "/action/rotation", "argvs": [deg] }); },
+    rotationWeapon: function (deg) { postMessage({ "fn": "/action/rotationWeapon", "argvs": [deg] }); },
     back: function () { postMessage({ "fn": "/action/back", "argvs": [] }); }
 };
 onmessage = function (oEvent) {

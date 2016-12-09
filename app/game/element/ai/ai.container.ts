@@ -69,7 +69,7 @@ export class AI{
         return this.model.state[key];
     }
 
-    toModel():PIXI.spine.Spine {
+    toModel():PIXI.Container {
         return this.model.spine;
     };
 }

@@ -1198,6 +1198,7 @@ declare module PIXI {
         vertexData: Float32Array;
         width: number;
         height: number;
+        zOrder: number;
 
         protected _onTextureUpdate(): void;
         calculateVertices(): void;

@@ -23,7 +23,6 @@
             'rxjs':                       'npm:rxjs',
             'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
             'pixi.js':                       'npm:pixi.js/dist/pixi.min.js',
-            'pixi-spine':                    'npm:pixi-spine/bin/pixi-spine.js',
             'codemirror':                 'npm:codemirror/lib',
             'codemirror/javascript':            'npm:codemirror/mode/javascript/javascript.js',
             'xterm':                       'npm:xterm/dist/xterm.js',
