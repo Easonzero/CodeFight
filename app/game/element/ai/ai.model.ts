@@ -1,3 +1,4 @@
+import {GamingStage} from "../stage/stage.gaming";
 import {Spine} from "./ai.spine";
 /**
  * Created by eason on 16-11-29.
@@ -12,4 +13,12 @@ export class Model {
     state:any = {
         isHitWall : false
     };
+
+    stage: GamingStage;
+    fireInterval: number;
+
+    constructor(stage: GamingStage) {
+        this.stage = stage;
+        this.fireInterval = 500;
+    }
 }

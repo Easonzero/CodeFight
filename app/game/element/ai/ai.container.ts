@@ -3,6 +3,8 @@ import {View} from "./ai.view";
 import {Model} from "./ai.model";
 import {Ray} from "../element.raytracer";
 import {MathUtils} from "../../../utils/utils.math";
+import {Stage} from "../stage/stage.interface";
+import {GamingStage} from "../stage/stage.gaming";
 /**
  * Created by eason on 16-9-22.
  */
@@ -13,10 +15,10 @@ export class AI{
     private view : View;//涉及ai绘制的api
     private worker : Worker;//ai用户线程
 
-    constructor(){
-        this.model = new Model();
+    constructor(stage: GamingStage){
+        this.model = new Model(stage);
         this.view = new View(this.model);
-        this.action = new Action(this.model,this.view);
+        this.action = new Action(this.model, this.view, this);
         //初始化用户线程
         this.worker = new Worker('./app/remote/remote.ai.js');
         this.worker.onmessage = this.call(this);
